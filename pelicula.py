@@ -69,3 +69,18 @@ class Pelicula:
     df_dictionary = pd.DataFrame([new_row])
     df_mov = pd.concat([df_mov, df_dictionary], ignore_index=True)
     return df_mov
+  
+  @classmethod
+  def create_df_from_csv(cls, filename):
+    # Este class method recibe el nombre de un archivo csv, valida su 
+    # estructura y devuelve un DataFrame con la información cargada del
+    # archivo 'filename'.
+    df_mov = pd.read_csv(filename)
+    df_mov = cls.clean(df_mov)
+    return df_mov
+  
+  @classmethod
+  def clean(cls, df):
+    df = df.dropna()
+    df["Release Date"] = pd.to_datetime(df["Release Date"], format="%d-%b-%Y")
+    return df
