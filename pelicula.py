@@ -7,14 +7,15 @@ class Pelicula:
       self.anio = anio
       self.generos = generos
       self.id = id
+
   def __repr__(self):
+      # Este método debe imprimir la información de esta película.
       strings = list()
       strings.append(f'Nombre: {self.nombre}')
       strings.append(f'Fecha de estreno: {self.fecha_estreno}')
       strings.append(f'Géneros: {self.generos}')
       strings.append(f'ID: {self.id}')
       return "\n".join(strings)
-        # Este método debe imprimir la información de esta película.  
 
   @classmethod    
   def get_from_df(cls, df_mov, id=None, nombre = None, anios = None, generos = None):
