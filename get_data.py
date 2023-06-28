@@ -159,6 +159,6 @@ for indice, fila in datos_filtrados.iterrows():
    lista_respuesta.append(peliculax)
 
 
-print("--------------------------")
+print("-----------------------")
 print("Voy a imprimir la lista respuesta")
 print(lista_respuesta)
