@@ -14,11 +14,27 @@ class Score:
     pass
 
   @classmethod
-  def create_df_from_csv(cls, filename):
+  def create_df_from_csv(cls, filename, df_usuarios, df_peliculas):
     # Este class method recibe el nombre de un archivo csv, valida su 
     # estructura y devuelve un DataFrame con la información cargada del
     # archivo 'filename'.
-    pass
+    df = pd.read_csv(filename)
+    df = cls.clean_df(df, df_usuarios, df_peliculas)
+    return df
+  
+  @classmethod
+  def clean_df(df, df_usuarios, df_peliculas):
+    df = df.dropna()
+    df["Date"] = pd.to_datetime(df["Date"], format="%Y-%m-%d %H:%M:%S")
+    # el user_id exista en usuarios
+    id_usuarios = set(df_usuarios["id"])
+    df = df.loc[df["user_id"].isin(id_usuarios)]
+    # el movie_id exista en peliculas
+    id_peliculas = set(df_peliculas["id"])
+    df = df.loc[df["movie_id"].isin(id_peliculas)]
+    # rating entre 1 y 5
+    df = df.loc[df["rating"].isin([1,2,3,4,5])]
+    return df
   
   @classmethod    
   def get_from_df(cls, df, id=None):

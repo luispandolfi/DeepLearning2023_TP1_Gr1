@@ -14,12 +14,22 @@ class Trabajador(Persona):
     pass
 
   @classmethod
-  def create_df_from_csv(cls, filename):
+  def create_df_from_csv(cls, filename, df_personas):
     # Este class method recibe el nombre de un archivo csv, valida su 
     # estructura y devuelve un DataFrame con la información cargada del
     # archivo 'filename'.
-    pass
+    df = pd.read_csv(filename)
+    df = cls.clean_df(df, df_personas)
+    return df
   
+  @classmethod
+  def clean_df(cls, df, df_personas):
+    df = df.dropna()
+    df["Start Date"] = pd.to_datetime(df["Start Date"], format="%Y-%m-%d")
+    id_personas = set(df_personas["id"])
+    df = df.loc[df["id"].isin(id_personas)]
+    return df
+
   @classmethod    
   def get_from_df(cls, df, id=None):
     # Este class method devuelve una lista de objetos 'Trabajador' buscando por:

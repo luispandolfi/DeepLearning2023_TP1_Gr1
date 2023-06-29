@@ -22,12 +22,12 @@ class Pelicula:
     # Este class method recibe el nombre de un archivo csv, valida su 
     # estructura y devuelve un DataFrame con la información cargada del
     # archivo 'filename'.
-    df_mov = pd.read_csv(filename)
-    df_mov = cls.clean(df_mov)
-    return df_mov
+    df = pd.read_csv(filename)
+    df = cls.clean_df(df)
+    return df
   
   @classmethod
-  def clean(cls, df):
+  def clean_df(cls, df):
     df = df.dropna()
     df["Release Date"] = pd.to_datetime(df["Release Date"], format="%d-%b-%Y")
     return df

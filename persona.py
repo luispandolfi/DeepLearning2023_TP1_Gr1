@@ -18,7 +18,16 @@ class Persona:
     # Este class method recibe el nombre de un archivo csv, valida su 
     # estructura y devuelve un DataFrame con la información cargada del
     # archivo 'filename'.
-    pass
+    df = pd.read_csv(filename)
+    df = cls.clean_df(df)
+    return df
+  
+  @classmethod
+  def clean_df(cls, df):
+    df = df.dropna()
+    df = df.drop_duplicates(subset = ["id"])
+    df = df.loc[df["Gender"].isin(["M", "F"])]
+    return df
   
   @classmethod    
   def get_from_df(cls, df, id=None, nombreCompleto=None, fechaNacimiento=None, genero=None, codigoPostal=None):
