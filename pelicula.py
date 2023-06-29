@@ -16,6 +16,21 @@ class Pelicula:
     strings.append(f'Géneros: {self.generos}')
     strings.append(f'ID: {self.id}')
     return "\n".join(strings)
+  
+  @classmethod
+  def create_df_from_csv(cls, filename):
+    # Este class method recibe el nombre de un archivo csv, valida su 
+    # estructura y devuelve un DataFrame con la información cargada del
+    # archivo 'filename'.
+    df_mov = pd.read_csv(filename)
+    df_mov = cls.clean(df_mov)
+    return df_mov
+  
+  @classmethod
+  def clean(cls, df):
+    df = df.dropna()
+    df["Release Date"] = pd.to_datetime(df["Release Date"], format="%d-%b-%Y")
+    return df
 
   @classmethod    
   def get_from_df(cls, df_mov, id=None, nombre = None, anios = None, generos = None):
@@ -69,20 +84,11 @@ class Pelicula:
     df_mov = pd.concat([df_mov, df_dictionary], ignore_index=True)
     return df_mov
   
-  @classmethod
-  def create_df_from_csv(cls, filename):
-    # Este class method recibe el nombre de un archivo csv, valida su 
-    # estructura y devuelve un DataFrame con la información cargada del
-    # archivo 'filename'.
-    df_mov = pd.read_csv(filename)
-    df_mov = cls.clean(df_mov)
-    return df_mov
-  
-  @classmethod
-  def clean(cls, df):
-    df = df.dropna()
-    df["Release Date"] = pd.to_datetime(df["Release Date"], format="%d-%b-%Y")
-    return df
+  def remove_from_df(self, df_mov):
+    # Borra del DataFrame el objeto contenido en esta clase.
+    # Para realizar el borrado todas las propiedades del objeto deben coincidir
+    # con la entrada en el DF. Caso contrario imprime un error.
+    pass
   
   @classmethod
   def get_stats(cls, df_mov, anios=None, generos=None):
@@ -95,10 +101,4 @@ class Pelicula:
     # - Datos película más vieja
     # - Datos película más nueva
     # - Bar plots con la cantidad de películas por año/género.
-    pass
-  
-  def remove_from_df(self, df_mov):
-    # Borra del DataFrame el objeto contenido en esta clase.
-    # Para realizar el borrado todas las propiedades del objeto deben coincidir
-    # con la entrada en el DF. Caso contrario imprime un error.
     pass
