@@ -23,7 +23,7 @@ class Score:
     return df
   
   @classmethod
-  def clean_df(df, df_usuarios, df_peliculas):
+  def clean_df(cls, df, df_usuarios, df_peliculas):
     df = df.dropna()
     df["Date"] = pd.to_datetime(df["Date"], format="%Y-%m-%d %H:%M:%S")
     # el user_id exista en usuarios
