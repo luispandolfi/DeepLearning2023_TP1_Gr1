@@ -1,30 +1,31 @@
 import pandas as pd
 
-
 class Pelicula:
+
   def __init__(self, nombre, anio, generos, id = None):
-      self.nombre = nombre
-      self.anio = anio
-      self.generos = generos
-      self.id = id
+    self.nombre = nombre
+    self.anio = anio
+    self.generos = generos
+    self.id = id
 
   def __repr__(self):
-      # Este método debe imprimir la información de esta película.
-      strings = list()
-      strings.append(f'Nombre: {self.nombre}')
-      strings.append(f'Fecha de estreno: {self.fecha_estreno}')
-      strings.append(f'Géneros: {self.generos}')
-      strings.append(f'ID: {self.id}')
-      return "\n".join(strings)
+    # Este método debe imprimir la información de esta película.
+    strings = list()
+    strings.append(f'Nombre: {self.nombre}')
+    strings.append(f'Fecha de estreno: {self.fecha_estreno}')
+    strings.append(f'Géneros: {self.generos}')
+    strings.append(f'ID: {self.id}')
+    return "\n".join(strings)
 
   @classmethod    
   def get_from_df(cls, df_mov, id=None, nombre = None, anios = None, generos = None):
-  # Este class method devuelve una lista de objetos 'Pelicula' buscando por:
-  # id: id
-  # nombre: nombre de la película
-  # anios: [desde_año, hasta_año]
-  # generos: [generos]
-  # Validar el campo antes de filtrar
+    # Este class method devuelve una lista de objetos 'Pelicula' buscando por:
+    # id: id
+    # nombre: nombre de la película
+    # anios: [desde_año, hasta_año]
+    # generos: [generos]
+    
+    # Validar el campo antes de filtrar
     #datos_filtrados = df_mov[(df_mov["Release Date"] > '1997-03-10')&(df_mov["Release Date"] < '1998-03-20')]
     datos_filtrados = df_mov[(df_mov["Release Date"] > f'{anios[0]}') & (df_mov["Release Date"] < f'{anios[1]}')]
     datos_filtrados = datos_filtrados[datos_filtrados['Name'].str.contains(nombre,case=False)]
@@ -40,8 +41,6 @@ class Pelicula:
       lista_respuesta.append(peliculax)
     return lista_respuesta
   
-
-
   def write_df(self, df_mov): 
     # Este método recibe el dataframe de películas y agrega la película
     # Si el id es None, toma el id más alto del DF y le suma uno. Si el 
@@ -85,20 +84,21 @@ class Pelicula:
     df["Release Date"] = pd.to_datetime(df["Release Date"], format="%d-%b-%Y")
     return df
   
-def get_stats(cls,df_mov, anios=None, generos=None):
-  # Este class method imprime una serie de estadísticas calculadas sobre
-  # los resultados de una consulta al DataFrame df_mov. 
-  # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
-  # anios: [desde_año, hasta_año]
-  # generos: [generos]
-  # Las estadísticas son:
-  # - Datos película más vieja
-  # - Datos película más nueva
-  # - Bar plots con la cantidad de películas por año/género.
-  pass
-
-def remove_from_df(self, df_mov):
-  # Borra del DataFrame el objeto contenido en esta clase.
-  # Para realizar el borrado todas las propiedades del objeto deben coincidir
-  # con la entrada en el DF. Caso contrario imprime un error.
-  pass
+  @classmethod
+  def get_stats(cls, df_mov, anios=None, generos=None):
+    # Este class method imprime una serie de estadísticas calculadas sobre
+    # los resultados de una consulta al DataFrame df_mov. 
+    # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
+    # anios: [desde_año, hasta_año]
+    # generos: [generos]
+    # Las estadísticas son:
+    # - Datos película más vieja
+    # - Datos película más nueva
+    # - Bar plots con la cantidad de películas por año/género.
+    pass
+  
+  def remove_from_df(self, df_mov):
+    # Borra del DataFrame el objeto contenido en esta clase.
+    # Para realizar el borrado todas las propiedades del objeto deben coincidir
+    # con la entrada en el DF. Caso contrario imprime un error.
+    pass
