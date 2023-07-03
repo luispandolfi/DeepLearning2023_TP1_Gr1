@@ -42,8 +42,19 @@ class Pelicula:
     
     # Validar el campo antes de filtrar
     #datos_filtrados = df_mov[(df_mov["Release Date"] > '1997-03-10')&(df_mov["Release Date"] < '1998-03-20')]
-    datos_filtrados = df_mov[(df_mov["Release Date"] > f'{anios[0]}') & (df_mov["Release Date"] < f'{anios[1]}')]
-    datos_filtrados = datos_filtrados[datos_filtrados['Name'].str.contains(nombre,case=False)]
+
+    datos_filtrados = df_mov
+
+    if anios != None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["Release Date"] > f'{anios[0]}') & (datos_filtrados["Release Date"] < f'{anios[1]}')]
+    
+    if nombre != None:
+      datos_filtrados = datos_filtrados[datos_filtrados['Name'].str.contains(nombre,case=False)]
+
+    if id !=  None:
+      datos_filtrados = datos_filtrados.query("id == id")
+
+
 
     lista_respuesta = []
     for indice, fila in datos_filtrados.iterrows():
