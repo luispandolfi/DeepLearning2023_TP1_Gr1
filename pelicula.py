@@ -2,9 +2,9 @@ import pandas as pd
 
 class Pelicula:
 
-  def __init__(self, nombre, anio, generos, id = None):
+  def __init__(self, nombre, fecha_estreno, generos, id = None):
     self.nombre = nombre
-    self.anio = anio
+    self.fecha_estreno = fecha_estreno
     self.generos = generos
     self.id = id
 
