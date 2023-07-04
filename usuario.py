@@ -3,7 +3,8 @@ import pandas as pd
 
 class Usuario(Persona):
   
-  def __init__(self, fecha_alta, ocupacion):
+  def __init__(self, id, fecha_alta, ocupacion):
+    self.id = id
     self.fecha_alta = fecha_alta
     self.ocupacion = ocupacion
 
@@ -29,7 +30,7 @@ class Usuario(Persona):
     return df
   
   @classmethod    
-  def get_from_df(cls, df, id=None):
+  def get_from_df(cls, df, id=None, fecha_alta=None, ocupacion=None):
     # Este class method devuelve una lista de objetos 'Usuario' buscando por:
     # 
     # TODO completar comentario y agregar parametros al metodo
@@ -45,7 +46,11 @@ class Usuario(Persona):
     # Borra del DataFrame el objeto contenido en esta clase.
     # Para realizar el borrado todas las propiedades del objeto deben coincidir
     # con la entrada en el DF. Caso contrario imprime un error.
-    pass
+    usuarios = self.get_from_df(df, self.id, self.fecha_alta, self.ocupacion)
+    if (len(usuarios) > 0):
+      return df[df.id != self.id]
+    else:
+      raise Exception('El usuario no coincide con ninguno de los existentes en el dataframe.')
   
   @classmethod
   def get_stats(cls, df):

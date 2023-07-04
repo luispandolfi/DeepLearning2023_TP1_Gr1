@@ -49,7 +49,11 @@ class Persona:
     # Borra del DataFrame el objeto contenido en esta clase.
     # Para realizar el borrado todas las propiedades del objeto deben coincidir
     # con la entrada en el DF. Caso contrario imprime un error.
-    pass
+    personas = self.get_from_df(df, self.id, self.nombre_completo, self.fecha_nacimiento, self.genero, self.codigo_postal)
+    if (len(personas) > 0):
+      return df[df.id != self.id]
+    else:
+      raise Exception('La persona no coincide con ninguna de las existentes en el dataframe.')
   
   @classmethod
   def get_stats(cls, df):
