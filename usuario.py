@@ -3,8 +3,8 @@ import pandas as pd
 
 class Usuario(Persona):
   
-  def __init__(self, fechaAlta, ocupacion):
-    self.fechaAlta = fechaAlta
+  def __init__(self, fecha_alta, ocupacion):
+    self.fecha_alta = fecha_alta
     self.ocupacion = ocupacion
 
   def __repr__(self):

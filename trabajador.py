@@ -3,11 +3,11 @@ import pandas as pd
 
 class Trabajador(Persona):
   
-  def __init__(self, fechaAlta, puesto, categoria, horarioDeTrabajo):
-    self.fechaAlta = fechaAlta
+  def __init__(self, fecha_alta, puesto, categoria, horario_trabajo):
+    self.fecha_alta = fecha_alta
     self.puesto = puesto
     self.categoria = categoria
-    self.horarioDeTrabajo = horarioDeTrabajo
+    self.horario_trabajo = horario_trabajo
 
   def __repr__(self):
     # Este método imprime la información de este trabajador.

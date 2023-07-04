@@ -2,11 +2,11 @@ import pandas as pd
 
 class Persona:
   
-  def __init__(self, nombreCompleto, fechaNacimiento, genero, codigoPostal, id = None):
-    self.nombreCompleto = nombreCompleto
-    self.fechaNacimiento = fechaNacimiento
+  def __init__(self, nombre_completo, fecha_nacimiento, genero, codigo_postal, id = None):
+    self.nombre_completo = nombre_completo
+    self.fecha_nacimiento = fecha_nacimiento
     self.genero = genero
-    self.codigoPostal = codigoPostal
+    self.codigo_postal = codigo_postal
     self.id = id
 
   def __repr__(self):
@@ -30,13 +30,13 @@ class Persona:
     return df
   
   @classmethod    
-  def get_from_df(cls, df, id=None, nombreCompleto=None, fechaNacimiento=None, genero=None, codigoPostal=None):
+  def get_from_df(cls, df, id=None, nombre_completo=None, fecha_nacimiento=None, genero=None, codigo_postal=None):
     # Este class method devuelve una lista de objetos 'Persona' buscando por:
     # id: id
-    # nombreCompleto: nombre completo
-    # fechaNacimiento: fecha de nacimiento
+    # nombre_completo: nombre completo
+    # fecha_nacimiento: fecha de nacimiento
     # genero: genero (M o F)
-    # codigoPostal: codigo postal
+    # codigo_postal: codigo postal
     pass
 
   def write_df(self, df): 
