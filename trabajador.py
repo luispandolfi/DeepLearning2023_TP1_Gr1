@@ -57,8 +57,6 @@ class Trabajador:
     if horario_trabajo != None:
       datos_filtrados = datos_filtrados[(datos_filtrados["Working Hours"] == horario_trabajo)]
 
-    
-
     lista_respuesta = []
     for indice, fila in datos_filtrados.iterrows():
       codigo_ = fila['id']
@@ -78,17 +76,19 @@ class Trabajador:
     # Si el id es None, toma el id más alto del DF y le suma uno. Si el 
     # id ya existe, no lo agrega y devuelve un error.
     pass
-  
+
+
   def remove_from_df(self, df):
     # Borra del DataFrame el objeto contenido en esta clase.
     # Para realizar el borrado todas las propiedades del objeto deben coincidir
     # con la entrada en el DF. Caso contrario imprime un error.
-    trabajadores = self.get_from_df(df, self.id, self.fecha_alta, self.puesto, self.categoria, self.horario_trabajo)
-    if (len(trabajadores) > 0):
+    trabajadores = self.get_from_df(df, self.id, [self.fecha_alta, self.fecha_alta], self.puesto, self.categoria, self.horario_trabajo)
+    if (len(trabajadores) == 1):
       return df[df.id != self.id]
     else:
       raise Exception('El trabajador no coincide con ninguno de los existentes en el dataframe.')
-  
+
+
   @classmethod
   def get_stats(cls, df):
     # Este class method imprime una serie de estadísticas calculadas sobre

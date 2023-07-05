@@ -77,17 +77,23 @@ class Persona:
     # Si el id es None, toma el id más alto del DF y le suma uno. Si el 
     # id ya existe, no la agrega y devuelve un error.
     pass
-  
+
+
   def remove_from_df(self, df):
     # Borra del DataFrame el objeto contenido en esta clase.
     # Para realizar el borrado todas las propiedades del objeto deben coincidir
     # con la entrada en el DF. Caso contrario imprime un error.
-    personas = self.get_from_df(df, self.id, self.nombre_completo, self.fecha_nacimiento, self.genero, self.codigo_postal)
-    if (len(personas) > 0):
-      return df[df.id != self.id]
-    else:
-      raise Exception('La persona no coincide con ninguna de las existentes en el dataframe.')
-  
+    
+    # mediante el get aseguramos que coincidan los valores de las propiedades, salvo nombre_completo que utiliza un contains
+    personas = self.get_from_df(df, self.id, self.nombre_completo, [self.fecha_nacimiento, self.fecha_nacimiento], self.genero, self.codigo_postal)
+    for persona in personas:
+      if persona.nombre_completo == self.nombre_completo:
+        return df[df.id != self.id]
+    
+    # no hay coincidencia entre todas las propiedades
+    raise Exception('La persona no coincide con ninguna de las existentes en el dataframe.')
+
+
   @classmethod
   def get_stats(cls, df):
     # Este class method imprime una serie de estadísticas calculadas sobre

@@ -80,8 +80,8 @@ class Usuario:
     # Borra del DataFrame el objeto contenido en esta clase.
     # Para realizar el borrado todas las propiedades del objeto deben coincidir
     # con la entrada en el DF. Caso contrario imprime un error.
-    usuarios = self.get_from_df(df, self.id, self.fecha_alta, self.ocupacion)
-    if (len(usuarios) > 0):
+    usuarios = self.get_from_df(df, self.id, [self.fecha_alta, self.fecha_alta], self.ocupacion)
+    if (len(usuarios) == 1):
       return df[df.id != self.id]
     else:
       raise Exception('El usuario no coincide con ninguno de los existentes en el dataframe.')
