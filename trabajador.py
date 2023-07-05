@@ -1,7 +1,7 @@
 from persona import Persona
 import pandas as pd
 
-class Trabajador(Persona):
+class Trabajador:
   
   def __init__(self, id, fecha_alta, puesto, categoria, horario_trabajo):
     self.id = id
