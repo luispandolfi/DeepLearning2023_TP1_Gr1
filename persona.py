@@ -42,7 +42,8 @@ class Persona:
     datos_filtrados = df
     
     if fecha_nacimiento != None:
-      datos_filtrados = datos_filtrados[(datos_filtrados["year of birth"] > f'{fecha_nacimiento[0]}') & (datos_filtrados["year of birth"] < f'{fecha_nacimiento[1]}')]
+      if len(fecha_nacimiento) == 2:
+        datos_filtrados = datos_filtrados[(datos_filtrados["year of birth"] >= f'{fecha_nacimiento[0]}') & (datos_filtrados["year of birth"] =< f'{fecha_nacimiento[1]}')]
     
     if nombre_completo != None:
       datos_filtrados = datos_filtrados[datos_filtrados['Full Name'].str.contains(nombre_completo,case=False)]
@@ -64,7 +65,7 @@ class Persona:
       fecha_nac = fila['year of birth']
       perso_genero = fila['Gender']
       cod_postal = fila['Zip Code']
-      personax = Persona(codigo,nombre,fecha_nac,perso_genero,cod_postal)
+      personax = Persona(codigo, nombre, fecha_nac, perso_genero, cod_postal)
       lista_respuesta.append(personax)
     return lista_respuesta
 
