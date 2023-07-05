@@ -34,7 +34,26 @@ class Usuario(Persona):
     # Este class method devuelve una lista de objetos 'Usuario' buscando por:
     # 
     # TODO completar comentario y agregar parametros al metodo
-    pass
+    datos_filtrados = df
+
+    if id !=  None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["id"] == id)]
+    
+    if fecha_alta != None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["Active Since"] > f'{fecha_alta[0]}') & (datos_filtrados["Active Since"] < f'{fecha_alta[1]}')]
+    
+    if ocupacion!= None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["Occupation"] == ocupacion)]
+    
+    lista_respuesta = []
+    for indice, fila in datos_filtrados.iterrows():
+      codigo_ = fila['id']
+      fecha_ = fila['Active Since']
+      puesto_ = fila['Occupation']
+
+      usuariox = Usuario(codigo_, fecha_, puesto_)
+      lista_respuesta.append(usuariox)
+    return lista_respuesta
 
   def write_df(self, df): 
     # Este método recibe el dataframe de usuarios y agrega al usuario
