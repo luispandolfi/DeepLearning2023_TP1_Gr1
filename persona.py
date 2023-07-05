@@ -52,6 +52,9 @@ class Persona:
 
     if genero!= None:
       datos_filtrados = datos_filtrados[(datos_filtrados["Gender"] == genero)]
+    
+    if codigo_postal != None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["Zip Code"] == codigo_postal)]
      
 
     lista_respuesta = []
