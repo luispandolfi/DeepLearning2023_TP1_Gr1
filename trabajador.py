@@ -36,7 +36,39 @@ class Trabajador(Persona):
     # Este class method devuelve una lista de objetos 'Trabajador' buscando por:
     # 
     # TODO completar comentario y agregar parametros al metodo
-    pass
+
+    datos_filtrados = df
+
+    if id !=  None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["id"] == id)]
+    
+    if fecha_alta != None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["Start Date"] > f'{fecha_alta[0]}') & (datos_filtrados["Start Date"] < f'{fecha_alta[1]}')]
+    
+    if puesto!= None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["Position"] == puesto)]
+    
+    if categoria != None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["Category"] == categoria)]
+
+    if horario_trabajo != None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["Working Hours"] == horario_trabajo)]
+
+    
+
+    lista_respuesta = []
+    for indice, fila in datos_filtrados.iterrows():
+      codigo_ = fila['id']
+      fecha_ = fila['Start Date']
+      puesto_ = fila['Position']
+
+      categoria_ = fila['Category']
+      horario_ = fila['Working Hours']
+      trabajadorx = Trabajador(codigo_, fecha_, puesto_, categoria_, horario_)
+      lista_respuesta.append(trabajadorx)
+    return lista_respuesta
+  
+  
 
   def write_df(self, df): 
     # Este método recibe el dataframe de trabajadores y agrega al trabajador
