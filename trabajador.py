@@ -43,7 +43,10 @@ class Trabajador(Persona):
       datos_filtrados = datos_filtrados[(datos_filtrados["id"] == id)]
     
     if fecha_alta != None:
-      datos_filtrados = datos_filtrados[(datos_filtrados["Start Date"] > f'{fecha_alta[0]}') & (datos_filtrados["Start Date"] < f'{fecha_alta[1]}')]
+      if len(fecha_alta) == 2:
+        datos_filtrados = datos_filtrados[(datos_filtrados["Start Date"] >= f'{fecha_alta[0]}') & (datos_filtrados["Start Date"] <= f'{fecha_alta[1]}')]
+      else:
+        raise ValueError("la lista anios debe tener largo 2")
     
     if puesto!= None:
       datos_filtrados = datos_filtrados[(datos_filtrados["Position"] == puesto)]

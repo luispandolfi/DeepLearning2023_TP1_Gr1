@@ -37,13 +37,16 @@ class Usuario(Persona):
     datos_filtrados = df
 
     if id !=  None:
-      datos_filtrados = datos_filtrados[(datos_filtrados["id"] == id)]
+      datos_filtrados = datos_filtrados[datos_filtrados["id"] == id]
     
     if fecha_alta != None:
-      datos_filtrados = datos_filtrados[(datos_filtrados["Active Since"] > f'{fecha_alta[0]}') & (datos_filtrados["Active Since"] < f'{fecha_alta[1]}')]
+      if len(fecha_alta) == 2:
+        datos_filtrados = datos_filtrados[datos_filtrados["Active Since"] >= f'{fecha_alta[0]}' & datos_filtrados["Active Since"] <= f'{fecha_alta[1]}']
+      else:
+        raise ValueError("la lista anios debe tener largo 2")
     
     if ocupacion!= None:
-      datos_filtrados = datos_filtrados[(datos_filtrados["Occupation"] == ocupacion)]
+      datos_filtrados = datos_filtrados[datos_filtrados["Occupation"] == ocupacion]
     
     lista_respuesta = []
     for indice, fila in datos_filtrados.iterrows():
