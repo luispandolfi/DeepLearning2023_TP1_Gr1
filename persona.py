@@ -31,13 +31,43 @@ class Persona:
   
   @classmethod    
   def get_from_df(cls, df, id=None, nombre_completo=None, fecha_nacimiento=None, genero=None, codigo_postal=None):
+
     # Este class method devuelve una lista de objetos 'Persona' buscando por:
     # id: id
     # nombre_completo: nombre completo
-    # fecha_nacimiento: fecha de nacimiento
+    # fecha_nacimiento: [desde_año, hasta_año]
     # genero: genero (M o F)
     # codigo_postal: codigo postal
-    pass
+    
+    datos_filtrados = df
+    
+    if fecha_nacimiento != None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["year of birth"] > f'{fecha_nacimiento[0]}') & (datos_filtrados["year of birth"] < f'{fecha_nacimiento[1]}')]
+    
+    if nombre_completo != None:
+      datos_filtrados = datos_filtrados[datos_filtrados['Full Name'].str.contains(nombre_completo,case=False)]
+
+    if id !=  None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["id"] == id)]
+
+    if genero!= None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["Gender"] == genero)]
+     
+
+    lista_respuesta = []
+    for indice, fila in datos_filtrados.iterrows():
+      codigo = fila['id']
+      nombre = fila['Full Name']
+      fecha_nac = fila['year of birth']
+      perso_genero = fila['Gender']
+      cod_postal = fila['Zip Code']
+      personax = Persona(codigo,nombre,fecha_nac,perso_genero,cod_postal)
+      lista_respuesta.append(personax)
+    return lista_respuesta
+
+
+
+
 
   def write_df(self, df): 
     # Este método recibe el dataframe de personas y agrega la persona
