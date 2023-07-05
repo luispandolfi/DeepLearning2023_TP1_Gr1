@@ -46,21 +46,22 @@ class Pelicula:
     datos_filtrados = df_mov
     
     if anios != None:
-      datos_filtrados = datos_filtrados[(datos_filtrados["Release Date"] > f'{anios[0]}') & (datos_filtrados["Release Date"] < f'{anios[1]}')]
-    
+      if len(anios) == 2:
+        datos_filtrados = datos_filtrados[(datos_filtrados["Release Date"] >= f'{anios[0]}') & (datos_filtrados["Release Date"] =< f'{anios[1]}')]
+      else:
+        raise ValueError("la lista anios debe tener largo 2")
+      
     if nombre != None:
       datos_filtrados = datos_filtrados[datos_filtrados['Name'].str.contains(nombre,case=False)]
 
     if id !=  None:
-      #datos_filtrados = datos_filtrados.query("id == id")
       datos_filtrados = datos_filtrados[(datos_filtrados["id"] == id)]
 
-    if generos!= None:
+    if generos!= None and len(generos) == 19:
       aux = 0
       lista_generos = ['unknown','Action','Adventure','Animation',"Children's",'Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance','Sci-Fi','Thriller','War','Western']
       for num in generos:
-        if num == 1:
-          datos_filtrados = datos_filtrados.query(f'{lista_generos[aux]} == 1')
+        datos_filtrados = datos_filtrados.query(f'{lista_generos[aux]} == {num}')
         aux += 1
 
     lista_respuesta = []
