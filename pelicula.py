@@ -44,7 +44,7 @@ class Pelicula:
     #datos_filtrados = df_mov[(df_mov["Release Date"] > '1997-03-10')&(df_mov["Release Date"] < '1998-03-20')]
 
     datos_filtrados = df_mov
-
+    
     if anios != None:
       datos_filtrados = datos_filtrados[(datos_filtrados["Release Date"] > f'{anios[0]}') & (datos_filtrados["Release Date"] < f'{anios[1]}')]
     
@@ -52,9 +52,16 @@ class Pelicula:
       datos_filtrados = datos_filtrados[datos_filtrados['Name'].str.contains(nombre,case=False)]
 
     if id !=  None:
-      datos_filtrados = datos_filtrados.query("id == id")
+      #datos_filtrados = datos_filtrados.query("id == id")
+      datos_filtrados = datos_filtrados[(datos_filtrados["id"] == id)]
 
-
+    if generos!= None:
+      aux = 0
+      lista_generos = ['unknown','Action','Adventure','Animation',"Children's",'Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance','Sci-Fi','Thriller','War','Western']
+      for num in generos:
+        if num == 1:
+          datos_filtrados = datos_filtrados.query(f'{lista_generos[aux]} == 1')
+        aux += 1
 
     lista_respuesta = []
     for indice, fila in datos_filtrados.iterrows():
