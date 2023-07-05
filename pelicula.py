@@ -47,7 +47,7 @@ class Pelicula:
     
     if anios != None:
       if len(anios) == 2:
-        datos_filtrados = datos_filtrados[(datos_filtrados["Release Date"] >= f'{anios[0]}') & (datos_filtrados["Release Date"] =< f'{anios[1]}')]
+        datos_filtrados = datos_filtrados[datos_filtrados["Release Date"] >= f'{anios[0]}' & datos_filtrados["Release Date"] <= f'{anios[1]}']
       else:
         raise ValueError("la lista anios debe tener largo 2")
       

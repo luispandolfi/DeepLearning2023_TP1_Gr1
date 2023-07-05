@@ -43,7 +43,9 @@ class Persona:
     
     if fecha_nacimiento != None:
       if len(fecha_nacimiento) == 2:
-        datos_filtrados = datos_filtrados[(datos_filtrados["year of birth"] >= f'{fecha_nacimiento[0]}') & (datos_filtrados["year of birth"] =< f'{fecha_nacimiento[1]}')]
+        datos_filtrados = datos_filtrados[(datos_filtrados["year of birth"] >= f'{fecha_nacimiento[0]}') & (datos_filtrados["year of birth"] <= f'{fecha_nacimiento[1]}')]
+      else:
+        raise ValueError("la lista anios debe tener largo 2")
     
     if nombre_completo != None:
       datos_filtrados = datos_filtrados[datos_filtrados['Full Name'].str.contains(nombre_completo,case=False)]
