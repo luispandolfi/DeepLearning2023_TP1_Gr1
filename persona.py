@@ -66,9 +66,6 @@ class Persona:
     return lista_respuesta
 
 
-
-
-
   def write_df(self, df): 
     # Este método recibe el dataframe de personas y agrega la persona
     # Si el id es None, toma el id más alto del DF y le suma uno. Si el 
