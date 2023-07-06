@@ -3,6 +3,8 @@ from usuario import Usuario
 from trabajador import Trabajador
 from pelicula import Pelicula
 from score import Score
+import pandas as pd
+
 
 def load_all(file_personas, file_trabajadores, file_usuarios, file_peliculas, file_scores):
   df_personas = Persona.create_df_from_csv(file_personas)
