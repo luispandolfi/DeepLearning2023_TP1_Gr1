@@ -11,9 +11,11 @@ class Persona:
     self.codigo_postal = codigo_postal
     self.id = id
 
+
   def __repr__(self):
     # Este método imprime la información de esta persona.
     pass
+
 
   @classmethod
   def create_df_from_csv(cls, filename):
@@ -23,14 +25,16 @@ class Persona:
     df = pd.read_csv(filename)
     df = cls.clean_df(df)
     return df
-  
+
+
   @classmethod
   def clean_df(cls, df):
     df = df.dropna()
     df = df.drop_duplicates(subset = ["id"])
     df = df.loc[df["Gender"].isin(["M", "F"])]
     return df
-  
+
+
   @classmethod    
   def get_from_df(cls, df, id=None, nombre_completo=None, fecha_nacimiento=None, genero=None, codigo_postal=None):
 
