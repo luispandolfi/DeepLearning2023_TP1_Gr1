@@ -9,6 +9,7 @@ class Pelicula:
     self.generos = generos
     self.id = id
 
+
   def __repr__(self):
     # Este método debe imprimir la información de esta película.
     strings = list()
@@ -17,7 +18,8 @@ class Pelicula:
     strings.append(f'Géneros: {self.generos}')
     strings.append(f'ID: {self.id}')
     return "\n".join(strings)
-  
+
+
   @classmethod
   def create_df_from_csv(cls, filename):
     # Este class method recibe el nombre de un archivo csv, valida su 
@@ -26,12 +28,14 @@ class Pelicula:
     df = pd.read_csv(filename)
     df = cls.clean_df(df)
     return df
-  
+
+
   @classmethod
   def clean_df(cls, df):
     df = df.dropna()
     df["Release Date"] = pd.to_datetime(df["Release Date"], format="%d-%b-%Y")
     return df
+
 
   @classmethod    
   def get_from_df(cls, df_mov, id=None, nombre = None, anios = None, generos = None):
@@ -103,6 +107,7 @@ class Pelicula:
       return df[df.id != self.id]
     else:
       raise Exception('La película no coincide con ninguna de las existentes en el dataframe.')
+
   
   @classmethod
   def get_stats(cls, df_mov, anios=None, generos=None):

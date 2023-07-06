@@ -2,6 +2,7 @@ from persona import Persona
 from helper import DataFrameHelper
 import pandas as pd
 
+
 class Usuario:
   
   def __init__(self, id, fecha_alta, ocupacion):
@@ -9,9 +10,11 @@ class Usuario:
     self.fecha_alta = fecha_alta
     self.ocupacion = ocupacion
 
+
   def __repr__(self):
     # Este método imprime la información de este trabajador.
     pass
+
 
   @classmethod
   def create_df_from_csv(cls, filename, df_personas):
@@ -21,7 +24,8 @@ class Usuario:
     df = pd.read_csv(filename)
     df = cls.clean_df(df, df_personas)
     return df
-  
+
+
   @classmethod
   def clean_df(cls, df, df_personas):
     df = df.dropna()
@@ -29,7 +33,8 @@ class Usuario:
     id_personas = set(df_personas["id"])
     df = df.loc[df["id"].isin(id_personas)]
     return df
-  
+
+
   @classmethod    
   def get_from_df(cls, df, id=None, fecha_alta=None, ocupacion=None):
     # Este class method devuelve una lista de objetos 'Usuario' buscando por:
@@ -80,6 +85,7 @@ class Usuario:
       return df[df.id != self.id]
     else:
       raise Exception('El usuario no coincide con ninguno de los existentes en el dataframe.')
+
   
   @classmethod
   def get_stats(cls, df):

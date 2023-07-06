@@ -2,6 +2,7 @@ from persona import Persona
 from helper import DataFrameHelper
 import pandas as pd
 
+
 class Trabajador:
   
   def __init__(self, id, fecha_alta, puesto, categoria, horario_trabajo):
@@ -11,9 +12,11 @@ class Trabajador:
     self.categoria = categoria
     self.horario_trabajo = horario_trabajo
 
+
   def __repr__(self):
     # Este método imprime la información de este trabajador.
     pass
+
 
   @classmethod
   def create_df_from_csv(cls, filename, df_personas):
@@ -23,7 +26,8 @@ class Trabajador:
     df = pd.read_csv(filename)
     df = cls.clean_df(df, df_personas)
     return df
-  
+
+
   @classmethod
   def clean_df(cls, df, df_personas):
     df = df.dropna()
@@ -31,6 +35,7 @@ class Trabajador:
     id_personas = set(df_personas["id"])
     df = df.loc[df["id"].isin(id_personas)]
     return df
+
 
   @classmethod    
   def get_from_df(cls, df, id=None, fecha_alta=None, puesto=None, categoria=None, horario_trabajo=None):
@@ -69,8 +74,7 @@ class Trabajador:
       trabajadorx = Trabajador(codigo_, fecha_, puesto_, categoria_, horario_)
       lista_respuesta.append(trabajadorx)
     return lista_respuesta
-  
-  
+    
 
   def write_df(self, df): 
     # Este método recibe el dataframe de trabajadores y agrega al trabajador

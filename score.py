@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 class Score:
   
   def __init__(self, id_usuario, id_pelicula, puntuacion, fecha, id=None):
@@ -9,9 +10,11 @@ class Score:
     self.fecha = fecha
     self.id = id
 
+
   def __repr__(self):
     # Este método imprime la información de este puntaje.
     pass
+
 
   @classmethod
   def create_df_from_csv(cls, filename, df_usuarios, df_peliculas):
@@ -21,7 +24,8 @@ class Score:
     df = pd.read_csv(filename)
     df = cls.clean_df(df, df_usuarios, df_peliculas)
     return df
-  
+
+
   @classmethod
   def clean_df(cls, df, df_usuarios, df_peliculas):
     df = df.dropna()
@@ -35,7 +39,8 @@ class Score:
     # rating entre 1 y 5
     df = df.loc[df["rating"].isin([1,2,3,4,5])]
     return df
-  
+
+
   @classmethod    
   def get_from_df(cls, df, id=None, id_usuario=None, id_pelicula=None, puntuacion=None, fecha=None):
     # Este class method devuelve una lista de objetos 'Score' buscando por:
@@ -43,11 +48,24 @@ class Score:
     # TODO completar comentario y agregar parametros al metodo
     pass
 
+
   def write_df(self, df): 
     # Este método recibe el dataframe de scores y agrega el puntaje.
     # Si el id es None, toma el id más alto del DF y le suma uno. Si el 
     # id ya existe, no lo agrega y devuelve un error.
-    pass
+    new_row = {
+      "Occupation": self.ocupacion,
+      "Active Since": self.fecha_alta,
+    }
+    if self.id == None:
+      new_row["id"] = df.id.max() + 1
+    elif self.id in df.id.values:
+      raise ValueError("Id no válido, ya se encuentra en el DataFrame")
+    else:
+      new_row["id"] = self.id
+    
+    df = pd.append(new_row, ignore_index = True)
+    return df
 
 
   def remove_from_df(self, df):
