@@ -46,7 +46,7 @@ class Usuario:
     
     if fecha_alta != None:
       if len(fecha_alta) == 2:
-        datos_filtrados = datos_filtrados[datos_filtrados["Active Since"] >= f'{fecha_alta[0]}' & datos_filtrados["Active Since"] <= f'{fecha_alta[1]}']
+        datos_filtrados = datos_filtrados[(datos_filtrados["Active Since"] >= f'{fecha_alta[0]}') & (datos_filtrados["Active Since"] <= f'{fecha_alta[1]}')]
       else:
         raise ValueError("la lista anios debe tener largo 2")
     
