@@ -11,4 +11,4 @@ class DataFrameHelper:
         else:
             new_row["id"] = id
         
-        df = pd.append(new_row, ignore_index = True)
+        return df.append(new_row, ignore_index = True)
