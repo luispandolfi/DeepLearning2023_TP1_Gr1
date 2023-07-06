@@ -1,5 +1,4 @@
-from persona import Persona
-from helper import DataFrameHelper
+from dataFrameHelper import DataFrameHelper
 import pandas as pd
 
 
@@ -86,7 +85,7 @@ class Usuario:
     else:
       raise Exception('El usuario no coincide con ninguno de los existentes en el dataframe.')
 
-  
+
   @classmethod
   def get_stats(cls, df):
     # Este class method imprime una serie de estadísticas calculadas sobre

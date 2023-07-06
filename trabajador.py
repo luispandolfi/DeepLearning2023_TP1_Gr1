@@ -1,5 +1,4 @@
-from persona import Persona
-from helper import DataFrameHelper
+from dataFrameHelper import DataFrameHelper
 import pandas as pd
 
 

@@ -1,5 +1,6 @@
-from helper import DataFrameHelper
+from dataFrameHelper import DataFrameHelper
 import pandas as pd
+
 
 class Pelicula:
 
@@ -108,7 +109,7 @@ class Pelicula:
     else:
       raise Exception('La película no coincide con ninguna de las existentes en el dataframe.')
 
-  
+
   @classmethod
   def get_stats(cls, df_mov, anios=None, generos=None):
     # Este class method imprime una serie de estadísticas calculadas sobre
