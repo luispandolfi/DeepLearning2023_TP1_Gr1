@@ -1,6 +1,7 @@
 from dataFrameHelper import DataFrameHelper
 import pandas as pd
 
+
 class Score:
   
   def __init__(self, id_usuario, id_pelicula, puntuacion, fecha, id=None):
@@ -57,15 +58,7 @@ class Score:
       "Occupation": self.ocupacion,
       "Active Since": self.fecha_alta,
     }
-    if self.id == None:
-      new_row["id"] = df.id.max() + 1
-    elif self.id in df.id.values:
-      raise ValueError("Id no válido, ya se encuentra en el DataFrame")
-    else:
-      new_row["id"] = self.id
-    
-    df = pd.append(new_row, ignore_index = True)
-    return df
+    return DataFrameHelper.append_row(df, new_row, self.id)
 
 
   def remove_from_df(self, df):
