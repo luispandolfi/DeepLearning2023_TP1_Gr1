@@ -18,3 +18,19 @@ class TestPersona:
     assert len(df_personas.id) == cantidad_inicial
     # la persona agregada se almacena en el df resultado
     assert len(df.id) == cantidad_inicial + 1
+
+
+  def test_write_id_no_existente(self, df_personas):
+    cantidad_inicial = len(df_personas.id)
+    persona = Persona("Lorem Ipsum", datetime(1970, 6, 29), "F", 12345, 9999)
+    df = persona.write_df(df_personas)
+    # el df original queda incambiado
+    assert len(df_personas.id) == cantidad_inicial
+    # la persona agregada se almacena en el df resultado
+    assert len(df.id) == cantidad_inicial + 1
+
+
+  def test_write_id_existente(self, df_personas):
+    persona = Persona("Lorem Ipsum", datetime(1970, 6, 29), "F", 12345, 1)
+    with pytest.raises(ValueError):
+      df = persona.write_df(df_personas)
