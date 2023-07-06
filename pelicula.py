@@ -1,5 +1,6 @@
 from dataFrameHelper import DataFrameHelper
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 class Pelicula:
@@ -121,4 +122,23 @@ class Pelicula:
     # - Datos película más vieja
     # - Datos película más nueva
     # - Bar plots con la cantidad de películas por año/género.
+    print("La pelicula más vieja es ", df_mov['Name'].iloc[df_mov['Release Date'].argmin()])
+    print("La pelicula más nueva es ", df_mov['Name'].iloc[df_mov['Release Date'].argmax()])
+    
+    fig, ax = plt.subplots()
+    df_mov = df_mov.sort_values('Release Date')
+    df_aux=df_mov['Release Date'].dt.year.value_counts(sort=False)
+    df_aux.plot(ax=ax, kind='bar', xlabel='año', ylabel='# peliculas')
+    
+    fig2, ax2 = plt.subplots()
+    df_aux2=df_mov.sum(axis=0, numeric_only=True )[-19:]
+    df_aux2=df_aux2.sort_values()
+    print(df_aux2)
+    df_aux2.plot(ax=ax2, kind='bar', xlabel='genero', ylabel='# peliculas')
+    plt.show()
     pass
+
+#df_mov=Pelicula.create_df_from_csv("csv_files/peliculas.csv")
+#Pelicula.get_stats(df_mov)
+#print(df_mov)
+
