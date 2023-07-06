@@ -1,3 +1,4 @@
+from helper import DataFrameHelper
 import pandas as pd
 
 class Pelicula:
@@ -74,7 +75,8 @@ class Pelicula:
       peliculax = Pelicula(nombre,fecha,list_genero,codigo)
       lista_respuesta.append(peliculax)
     return lista_respuesta
-  
+
+
   def write_df(self, df): 
     # Este método recibe el dataframe de películas y agrega la película
     # Si el id es None, toma el id más alto del DF y le suma uno. Si el 
@@ -83,26 +85,15 @@ class Pelicula:
       "name": self.nombre,
       "Release Date": self.fecha_estreno,
     }
-    
-    if self.id == None:
-      new_row["id"] = df.id.max() + 1
-    elif self.id in df.id.values:
-      ex = ValueError()
-      ex.strerror = "Id no válido, ya se encuentra en el DataFrame"
-      raise ex
-    else:
-      new_row["id"] = self.id
-      
     for key in df.keys()[-19:]:
       if key in self.generos:
         new_row[f"{key}"] = 1
       else:
         new_row[f"{key}"] = 0
 
-    df_dictionary = pd.DataFrame([new_row])
-    df = pd.concat([df, df_dictionary], ignore_index=True)
-    return df
-  
+    return DataFrameHelper.append_row(df, new_row, self.id)
+
+
   def remove_from_df(self, df):
     # Borra del DataFrame el objeto contenido en esta clase.
     # Para realizar el borrado todas las propiedades del objeto deben coincidir

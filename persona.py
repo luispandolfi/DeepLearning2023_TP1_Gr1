@@ -1,3 +1,4 @@
+from helper import DataFrameHelper
 import pandas as pd
 
 class Persona:
@@ -76,7 +77,13 @@ class Persona:
     # Este método recibe el dataframe de personas y agrega la persona
     # Si el id es None, toma el id más alto del DF y le suma uno. Si el 
     # id ya existe, no la agrega y devuelve un error.
-    pass
+    new_row = {
+      "Full Name": self.nombre_completo,
+      "year of birth": self.fecha_nacimiento,
+      "Gender": self.genero,
+      "Zip Code": self.codigo_postal,
+    }
+    return DataFrameHelper.append_row(df, new_row, self.id)
 
 
   def remove_from_df(self, df):

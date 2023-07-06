@@ -1,4 +1,5 @@
 from persona import Persona
+from helper import DataFrameHelper
 import pandas as pd
 
 class Usuario:
@@ -58,6 +59,7 @@ class Usuario:
       lista_respuesta.append(usuariox)
     return lista_respuesta
 
+
   def write_df(self, df):
     # Este método recibe el dataframe de usuarios y agrega al usuario
     # Si el id es None, toma el id más alto del DF y le suma uno. Si el 
@@ -66,15 +68,8 @@ class Usuario:
       "Occupation": self.ocupacion,
       "Active Since": self.fecha_alta,
     }
-    if self.id == None:
-      new_row["id"] = df.id.max() + 1
-    elif self.id in df.id.values:
-      raise ValueError("Id no válido, ya se encuentra en el DataFrame")
-    else:
-      new_row["id"] = self.id
-    
-    df = pd.append(new_row, ignore_index = True)
-    return df
+    return DataFrameHelper.append_row(df, new_row, self.id)
+
   
   def remove_from_df(self, df):
     # Borra del DataFrame el objeto contenido en esta clase.
