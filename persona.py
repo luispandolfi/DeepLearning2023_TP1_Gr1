@@ -107,10 +107,28 @@ class Persona:
 
 
   @classmethod
-  def get_stats(cls, df):
+  def get_stats(cls, df, fecha_nacimiento=None, genero=None, codigo_postal=None):
     # Este class method imprime una serie de estadísticas calculadas sobre
     # los resultados de una consulta al DataFrame df. 
     # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
-    # 
-    # TODO completar comentario y agregar parametros al metodo
-    pass
+    # fecha de nacimiento
+    # generos
+    # codigo postal
+    # Las estadísticas son:
+    # - Persona más vieja
+    # - Persona más joven
+    # - Bar plots con la cantidad de películas por año/género.
+    
+    datos_filtrados = df
+    
+    #filtrar con funcion
+
+    stats={
+      
+      "persona_mas_vieja": datos_filtrados['Full Name'].iloc[datos_filtrados['year of birth'].argmin()],
+      "persona_mas_joven": datos_filtrados['Full Name'].iloc[datos_filtrados['year of birth'].argmax()], 
+      "year_plots": datos_filtrados['year of birth'].value_counts(sort=False),
+      "gender_plots": datos_filtrados['Gender'].value_counts(sort=False)
+    }
+    return stats
+
