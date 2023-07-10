@@ -1,7 +1,6 @@
 from dataFrameHelper import DataFrameHelper
 import pandas as pd
 
-
 class Usuario:
   
   def __init__(self, id, fecha_alta, ocupacion):
@@ -87,10 +86,22 @@ class Usuario:
 
 
   @classmethod
-  def get_stats(cls, df):
+  def get_stats(cls, df, fecha_alta=None, ocupacion=None):
     # Este class method imprime una serie de estadísticas calculadas sobre
     # los resultados de una consulta al DataFrame df. 
     # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
-    # 
-    # TODO completar comentario y agregar parametros al metodo
-    pass
+    # Año
+    # Ocupacion
+    # Se devuelve:
+    # Id del ususario mas viejo
+    # Id del más nuevo
+    # Bar plot de ocupacion vs n# usuarios
+
+    datos_filtrados = df
+    #Filtrar con funcion
+    stats={
+      "id_ususario_mas_nuevo": datos_filtrados['id'].iloc[datos_filtrados['Active Since'].argmin()],
+      "id_usuario_mas_viejo": datos_filtrados['id'].iloc[datos_filtrados['Active Since'].argmax()], 
+      "plots_ocupacion": datos_filtrados['Occupation'].value_counts(sort=False),
+    }
+    return stats
