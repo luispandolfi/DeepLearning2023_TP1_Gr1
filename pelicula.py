@@ -122,6 +122,9 @@ class Pelicula:
     # - Datos película más vieja
     # - Datos película más nueva
     # - Bar plots con la cantidad de películas por año/género.
+    
+    
+    """
     print("La pelicula más vieja es ", df_mov['Name'].iloc[df_mov['Release Date'].argmin()])
     print("La pelicula más nueva es ", df_mov['Name'].iloc[df_mov['Release Date'].argmax()])
     
@@ -136,9 +139,16 @@ class Pelicula:
     print(df_aux2)
     df_aux2.plot(ax=ax2, kind='bar', xlabel='genero', ylabel='# peliculas')
     plt.show()
-    pass
+    """
+    datos_filtrados = df_mov
+    #filtrar con funcion
+     
+    stats={
+      
+      "pelicula_mas_vieja": datos_filtrados['Name'].iloc[datos_filtrados['Release Date'].argmin()],
+      "pelicula_mas_nueva": datos_filtrados['Name'].iloc[datos_filtrados['Release Date'].argmax()], 
+      "relase_date_plots": datos_filtrados['Release Date'].dt.year.value_counts(sort=False),
+      "gender_plots": datos_filtrados.sum(axis=0, numeric_only=True )[-19:]
 
-#df_mov=Pelicula.create_df_from_csv("csv_files/peliculas.csv")
-#Pelicula.get_stats(df_mov)
-#print(df_mov)
-
+    }
+    return stats
