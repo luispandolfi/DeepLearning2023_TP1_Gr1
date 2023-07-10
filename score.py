@@ -78,5 +78,14 @@ class Score:
     # los resultados de una consulta al DataFrame df. 
     # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
     # 
-    # TODO completar comentario y agregar parametros al metodo
-    pass
+    # Se devuelve:
+    # Barplot de rating
+    datos_filtrados=df
+
+    #filtrar con funcion
+
+    stats={
+      "rating_plots": datos_filtrados['rating'].value_counts(sort=False)
+    }
+    return stats
+    
