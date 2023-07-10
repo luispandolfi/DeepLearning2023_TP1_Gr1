@@ -106,4 +106,18 @@ class Trabajador:
     # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
     # 
     # TODO completar comentario y agregar parametros al metodo
-    pass
+    datos_filtrados = df
+    
+    #filtrar con funcion
+    
+    stats={
+      
+      "id_trabajador_mas_viejo": datos_filtrados['id'].iloc[datos_filtrados['Start Date'].argmin()],
+      "id_trabajador_mas_joven": datos_filtrados['id'].iloc[datos_filtrados['Start Date'].argmax()], 
+      #"year_plots": datos_filtrados['fecha_alta'].value_counts(sort=False),
+      "categoria_plots": datos_filtrados['Category'].value_counts(sort=False),
+      "posicion_plots": datos_filtrados['Position'].value_counts(sort=False),
+      "horario_trabajo_plots": datos_filtrados['Working Hours'].value_counts(sort=False)
+    }
+
+    return stats
