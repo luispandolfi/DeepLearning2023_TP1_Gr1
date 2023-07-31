@@ -14,7 +14,8 @@ class Persona:
 
   def __repr__(self):
     # Este método imprime la información de esta persona.
-    pass
+    return f'Nombre: {self.nombre_completo}, Fecha de nacimiento: {self.fecha_nacimiento}, Genero: {self.genero}, Codigo Postal: {self.codigo_postal}, ID: {self.id}\n'
+    #pass
 
 
   @classmethod

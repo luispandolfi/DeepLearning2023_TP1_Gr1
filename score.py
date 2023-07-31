@@ -14,7 +14,8 @@ class Score:
 
   def __repr__(self):
     # Este método imprime la información de este puntaje.
-    pass
+    return f'ID: {self.id}, ID Usuario: {self.id_usuario}, ID Pelicula: {self.id_pelicula}, Puntuacion: {self.puntuacion}, Fecha: {self.fecha}\n'
+    
 
 
   @classmethod

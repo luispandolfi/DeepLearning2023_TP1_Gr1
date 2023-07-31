@@ -14,7 +14,8 @@ class Trabajador:
 
   def __repr__(self):
     # Este método imprime la información de este trabajador.
-    pass
+    return f'ID: {self.id}, Fecha de alta: {self.fecha_alta}, Puesto: {self.puesto}, Categoria: {self.categoria}, Horario laboral: {self.horario_trabajo}\n'
+    
 
 
   @classmethod

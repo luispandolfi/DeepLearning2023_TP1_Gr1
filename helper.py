@@ -27,3 +27,20 @@ class DataFrameStore:
     self.usuarios = usuarios
     self.peliculas = peliculas
     self.scores = scores
+
+def save_dfs(df_personas, df_trabajadores, df_usuarios, df_peliculas, df_scores, file_personas="csv_files/personas.csv", file_trabajadores="csv_files/trabajadores.csv", file_usuarios="csv_files/usuarios.csv", file_peliculas="csv_files/peliculas.csv", file_scores="csv_files/scores.csv"):
+    #
+    # Guarda los dataframes en archivos CSVs
+    #
+    try:
+        df_personas.to_csv(file_personas, index=False)
+        df_trabajadores.to_csv(file_trabajadores, index=False)
+        df_usuarios.to_csv(file_usuarios, index=False)
+        df_peliculas.to_csv(file_peliculas, index=False)
+        df_scores.to_csv(file_scores, index=False)
+        print("CSVs guardados exitosamente")
+        return 0
+    except:
+        print("Error en el guardado de CSVs")
+        return -1
+

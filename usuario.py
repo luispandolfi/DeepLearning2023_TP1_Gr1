@@ -11,8 +11,8 @@ class Usuario:
 
   def __repr__(self):
     # Este método imprime la información de este trabajador.
-    pass
-
+    return f'ID: {self.id}, Fecha de alta: {self.fecha_alta}, Ocupacion: {self.ocupacion}\n'
+    
 
   @classmethod
   def create_df_from_csv(cls, filename, df_personas):

@@ -14,12 +14,15 @@ class Pelicula:
 
   def __repr__(self):
     # Este método debe imprimir la información de esta película.
-    strings = list()
-    strings.append(f'Nombre: {self.nombre}')
-    strings.append(f'Fecha de estreno: {self.fecha_estreno}')
-    strings.append(f'Géneros: {self.generos}')
-    strings.append(f'ID: {self.id}')
-    return "\n".join(strings)
+
+    return f'Nombre: {self.nombre}, Fecha de estreno: {self.fecha_estreno}, Genero: {self.generos}, ID: {self.id}\n'
+    # strings = list()
+    # strings.append(f'Nombre: {self.nombre}')
+    # strings.append(f'Fecha de estreno: {self.fecha_estreno}')
+    # strings.append(f'Géneros: {self.generos}')
+    # strings.append(f'ID: {self.id}')
+    # return "\n".join(strings)
+  
 
 
   @classmethod
