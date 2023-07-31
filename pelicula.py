@@ -57,7 +57,7 @@ class Pelicula:
     
     if anios != None:
       if len(anios) == 2:
-        datos_filtrados = datos_filtrados[datos_filtrados["Release Date"] >= f'{anios[0]}' & datos_filtrados["Release Date"] <= f'{anios[1]}']
+        datos_filtrados = datos_filtrados[(datos_filtrados["Release Date"] >= f'{anios[0]}') & (datos_filtrados["Release Date"] <= f'{anios[1]}')]
       else:
         raise ValueError("la lista anios debe tener largo 2")
       
@@ -91,7 +91,7 @@ class Pelicula:
     # Si el id es None, toma el id más alto del DF y le suma uno. Si el 
     # id ya existe, no la agrega y devuelve un error.
     new_row = {
-      "name": self.nombre,
+      "Name": self.nombre,
       "Release Date": self.fecha_estreno,
     }
     for key in df.keys()[-19:]:
