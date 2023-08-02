@@ -55,8 +55,9 @@ class Usuario:
   @classmethod
   def get_from_df(cls, df, id=None, fecha_alta=None, ocupacion=None):
     # Este class method devuelve una lista de objetos 'Usuario' buscando por:
-    # 
-    # TODO completar comentario y agregar parametros al metodo
+    # - id: id
+    # - fecha_alta: [fecha_desde, fecha_hasta]
+    # - ocupacion: ocupación
     
     datos_filtrados = Usuario.__filter_df__(df, id, fecha_alta, ocupacion)
     
@@ -106,7 +107,7 @@ class Usuario:
     # - Cantidad de usuarios por ocupación
 
     datos_filtrados = Usuario.__filter_df__(df, fecha_alta=fecha_alta, ocupacion=ocupacion)
-    
+
     stats = {
       "total_usuarios": len(datos_filtrados.index),
       "usuarios_por_anio": datos_filtrados.groupby(datos_filtrados['Active Since'].dt.year).size(),

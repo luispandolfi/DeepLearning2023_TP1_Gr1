@@ -64,8 +64,11 @@ class Trabajador:
   @classmethod
   def get_from_df(cls, df, id=None, fecha_alta=None, puesto=None, categoria=None, horario_trabajo=None):
     # Este class method devuelve una lista de objetos 'Trabajador' buscando por:
-    # 
-    # TODO completar comentario y agregar parametros al metodo
+    # - id: id
+    # - fecha_alta: [fecha_desde, fecha_hasta]
+    # - puesto: puesto
+    # - categoria: categoria
+    # - horario_trabajo: horario de trabajo
 
     datos_filtrados = Trabajador.__filter_df__(df, id, fecha_alta, puesto, categoria, horario_trabajo)
 

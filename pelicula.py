@@ -44,14 +44,11 @@ class Pelicula:
   @classmethod    
   def get_from_df(cls, df_mov, id=None, nombre = None, anios = None, generos = None):
     # Este class method devuelve una lista de objetos 'Pelicula' buscando por:
-    # id: id
-    # nombre: nombre de la película
-    # anios: [desde_año, hasta_año]
-    # generos: [generos]
+    # - id: id
+    # - nombre: nombre de la película
+    # - anios: [desde_año, hasta_año]
+    # - generos: lista de géneros
     
-    # Validar el campo antes de filtrar
-    #datos_filtrados = df_mov[(df_mov["Release Date"] > '1997-03-10')&(df_mov["Release Date"] < '1998-03-20')]
-
     datos_filtrados = df_mov
     
     if anios != None:
@@ -118,8 +115,8 @@ class Pelicula:
     # Este class method imprime una serie de estadísticas calculadas sobre
     # los resultados de una consulta al DataFrame df_mov. 
     # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
-    # anios: [desde_año, hasta_año]
-    # generos: [generos]
+    # - anios: [desde_año, hasta_año]
+    # - generos: [generos]
     # Las estadísticas son:
     # - Datos película más vieja
     # - Datos película más nueva

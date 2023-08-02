@@ -63,13 +63,12 @@ class Persona:
 
   @classmethod    
   def get_from_df(cls, df, id=None, nombre_completo=None, fecha_nacimiento=None, genero=None, codigo_postal=None):
-
     # Este class method devuelve una lista de objetos 'Persona' buscando por:
-    # id: id
-    # nombre_completo: nombre completo
-    # fecha_nacimiento: [desde_año, hasta_año]
-    # genero: genero (M o F)
-    # codigo_postal: codigo postal
+    # - id: id
+    # - nombre_completo: nombre completo
+    # - fecha_nacimiento: [desde_año, hasta_año]
+    # - genero: genero (M o F)
+    # - codigo_postal: codigo postal
     
     datos_filtrados = Persona.__filter_df__(df, id, nombre_completo, fecha_nacimiento, genero, codigo_postal)
 
