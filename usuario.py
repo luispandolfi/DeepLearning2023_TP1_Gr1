@@ -98,18 +98,18 @@ class Usuario:
     # Este class method imprime una serie de estadísticas calculadas sobre
     # los resultados de una consulta al DataFrame df. 
     # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
-    # Año
-    # Ocupacion
+    # - Fecha de alta: [desde, hasta]
+    # - Ocupación
     # Se devuelve:
-    # Id del ususario mas viejo
-    # Id del más nuevo
-    # Bar plot de ocupacion vs n# usuarios
+    # - Total de usuarios
+    # - Cantidad de usuarios por año de alta
+    # - Cantidad de usuarios por ocupación
 
-    datos_filtrados = df
-    #Filtrar con funcion
-    stats={
-      "id_ususario_mas_nuevo": datos_filtrados['id'].iloc[datos_filtrados['Active Since'].argmin()],
-      "id_usuario_mas_viejo": datos_filtrados['id'].iloc[datos_filtrados['Active Since'].argmax()], 
-      "plots_ocupacion": datos_filtrados['Occupation'].value_counts(sort=False),
+    datos_filtrados = Usuario.__filter_df__(df, fecha_alta=fecha_alta, ocupacion=ocupacion)
+    
+    stats = {
+      "total_usuarios": len(datos_filtrados.index),
+      "usuarios_por_anio": datos_filtrados.groupby(datos_filtrados['Active Since'].dt.year).size(),
+      "usuarios_por_ocupacion": datos_filtrados.groupby('Occupation').size()
     }
     return stats
