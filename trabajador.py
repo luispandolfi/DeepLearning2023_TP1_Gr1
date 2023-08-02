@@ -17,7 +17,6 @@ class Trabajador:
     return f'ID: {self.id}, Fecha de alta: {self.fecha_alta}, Puesto: {self.puesto}, Categoria: {self.categoria}, Horario laboral: {self.horario_trabajo}\n'
     
 
-
   @classmethod
   def create_df_from_csv(cls, filename, df_personas):
     # Este class method recibe el nombre de un archivo csv, valida su 
@@ -108,24 +107,23 @@ class Trabajador:
 
 
   @classmethod
-  def get_stats(cls, df):
+  def get_stats(cls, df, fecha_alta=None, puesto=None):
     # Este class method imprime una serie de estadísticas calculadas sobre
     # los resultados de una consulta al DataFrame df. 
     # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
-    # 
-    # TODO completar comentario y agregar parametros al metodo
-    datos_filtrados = df
+    # - Fecha de alta: [desde, hasta]
+    # - Puesto
+    # Se devuelve:
+    # - Total de trabajadores
+    # - Cantidad de trabajadores por año de alta
+    # - Cantidad de trabajadores por puesto
+
+    datos_filtrados = Trabajador.__filter_df__(df, fecha_alta=fecha_alta, puesto=puesto)
     
-    #filtrar con funcion
-    
-    stats={
-      
-      "id_trabajador_mas_viejo": datos_filtrados['id'].iloc[datos_filtrados['Start Date'].argmin()],
-      "id_trabajador_mas_joven": datos_filtrados['id'].iloc[datos_filtrados['Start Date'].argmax()], 
-      #"year_plots": datos_filtrados['fecha_alta'].value_counts(sort=False),
-      "categoria_plots": datos_filtrados['Category'].value_counts(sort=False),
-      "posicion_plots": datos_filtrados['Position'].value_counts(sort=False),
-      "horario_trabajo_plots": datos_filtrados['Working Hours'].value_counts(sort=False)
+    stats = {
+      "total_trabajadores": len(datos_filtrados.index),
+      "trabajadores_por_anio": datos_filtrados.groupby(datos_filtrados['Start Date'].dt.year).size(),
+      "trabajadores_por_puesto": datos_filtrados.groupby('Position').size()
     }
 
     return stats
