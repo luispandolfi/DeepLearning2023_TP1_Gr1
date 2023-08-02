@@ -37,24 +37,20 @@ class Trabajador:
     return df
 
 
-  @classmethod    
-  def get_from_df(cls, df, id=None, fecha_alta=None, puesto=None, categoria=None, horario_trabajo=None):
-    # Este class method devuelve una lista de objetos 'Trabajador' buscando por:
-    # 
-    # TODO completar comentario y agregar parametros al metodo
-
+  @classmethod
+  def __filter_df__(cls, df, id=None, fecha_alta=None, puesto=None, categoria=None, horario_trabajo=None):
     datos_filtrados = df
 
-    if id !=  None:
+    if id != None:
       datos_filtrados = datos_filtrados[(datos_filtrados["id"] == id)]
     
     if fecha_alta != None:
       if len(fecha_alta) == 2:
         datos_filtrados = datos_filtrados[(datos_filtrados["Start Date"] >= f'{fecha_alta[0]}') & (datos_filtrados["Start Date"] <= f'{fecha_alta[1]}')]
       else:
-        raise ValueError("la lista anios debe tener largo 2")
+        raise ValueError("La lista fecha_alta debe tener largo 2")
     
-    if puesto!= None:
+    if puesto != None:
       datos_filtrados = datos_filtrados[(datos_filtrados["Position"] == puesto)]
     
     if categoria != None:
@@ -62,6 +58,17 @@ class Trabajador:
 
     if horario_trabajo != None:
       datos_filtrados = datos_filtrados[(datos_filtrados["Working Hours"] == horario_trabajo)]
+    
+    return datos_filtrados
+
+
+  @classmethod
+  def get_from_df(cls, df, id=None, fecha_alta=None, puesto=None, categoria=None, horario_trabajo=None):
+    # Este class method devuelve una lista de objetos 'Trabajador' buscando por:
+    # 
+    # TODO completar comentario y agregar parametros al metodo
+
+    datos_filtrados = Trabajador.__filter_df__(df, id, fecha_alta, puesto, categoria, horario_trabajo)
 
     lista_respuesta = []
     for indice, fila in datos_filtrados.iterrows():
@@ -74,7 +81,7 @@ class Trabajador:
       trabajadorx = Trabajador(codigo_, fecha_, puesto_, categoria_, horario_)
       lista_respuesta.append(trabajadorx)
     return lista_respuesta
-    
+
 
   def write_df(self, df): 
     # Este método recibe el dataframe de trabajadores y agrega al trabajador
