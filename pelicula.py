@@ -41,14 +41,8 @@ class Pelicula:
     return df
 
 
-  @classmethod    
-  def get_from_df(cls, df_mov, id=None, nombre = None, anios = None, generos = None):
-    # Este class method devuelve una lista de objetos 'Pelicula' buscando por:
-    # - id: id
-    # - nombre: nombre de la película
-    # - anios: [desde_año, hasta_año]
-    # - generos: lista de géneros
-    
+  @classmethod
+  def __filter_df__(cls, df_mov, id=None, nombre = None, anios = None, generos = None):
     datos_filtrados = df_mov
     
     if anios != None:
@@ -69,6 +63,19 @@ class Pelicula:
       for num in generos:
         datos_filtrados = datos_filtrados.query(f'{lista_generos[aux]} == {num}')
         aux += 1
+    
+    return datos_filtrados
+
+
+  @classmethod
+  def get_from_df(cls, df_mov, id=None, nombre = None, anios = None, generos = None):
+    # Este class method devuelve una lista de objetos 'Pelicula' buscando por:
+    # - id: id
+    # - nombre: nombre de la película
+    # - anios: [desde_año, hasta_año]
+    # - generos: lista de géneros
+    
+    datos_filtrados = Pelicula.__filter_df__(df_mov, id, nombre, anios, generos)
 
     lista_respuesta = []
     for indice, fila in datos_filtrados.iterrows():
