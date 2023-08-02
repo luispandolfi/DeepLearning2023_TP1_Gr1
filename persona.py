@@ -36,21 +36,13 @@ class Persona:
     return df
 
 
-  @classmethod    
-  def get_from_df(cls, df, id=None, nombre_completo=None, fecha_nacimiento=None, genero=None, codigo_postal=None):
-
-    # Este class method devuelve una lista de objetos 'Persona' buscando por:
-    # id: id
-    # nombre_completo: nombre completo
-    # fecha_nacimiento: [desde_año, hasta_año]
-    # genero: genero (M o F)
-    # codigo_postal: codigo postal
-    
+  @classmethod
+  def __filter_df__(cls, df, id=None, nombre_completo=None, fecha_nacimiento=None, genero=None, codigo_postal=None):
     datos_filtrados = df
     
     if fecha_nacimiento != None:
       if len(fecha_nacimiento) == 2:
-        datos_filtrados = datos_filtrados[(datos_filtrados["year of birth"] >= f'{fecha_nacimiento[0]}') & (datos_filtrados["year of birth"] <= f'{fecha_nacimiento[1]}')]
+        datos_filtrados = datos_filtrados[(datos_filtrados["year of birth"] >= fecha_nacimiento[0]) & (datos_filtrados["year of birth"] <= fecha_nacimiento[1])]
       else:
         raise ValueError("la lista anios debe tener largo 2")
     
@@ -65,7 +57,21 @@ class Persona:
     
     if codigo_postal != None:
       datos_filtrados = datos_filtrados[(datos_filtrados["Zip Code"] == codigo_postal)]
-     
+    
+    return datos_filtrados
+
+
+  @classmethod    
+  def get_from_df(cls, df, id=None, nombre_completo=None, fecha_nacimiento=None, genero=None, codigo_postal=None):
+
+    # Este class method devuelve una lista de objetos 'Persona' buscando por:
+    # id: id
+    # nombre_completo: nombre completo
+    # fecha_nacimiento: [desde_año, hasta_año]
+    # genero: genero (M o F)
+    # codigo_postal: codigo postal
+    
+    datos_filtrados = Persona.__filter_df__(df, id, nombre_completo, fecha_nacimiento, genero, codigo_postal)
 
     lista_respuesta = []
     for indice, fila in datos_filtrados.iterrows():
