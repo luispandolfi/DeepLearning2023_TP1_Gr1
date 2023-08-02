@@ -118,43 +118,26 @@ class Pelicula:
 
 
   @classmethod
-  def get_stats(cls, df_mov, anios=None, generos=None):
+  def get_stats(cls, df, anios=None, generos=None):
     # Este class method imprime una serie de estadísticas calculadas sobre
-    # los resultados de una consulta al DataFrame df_mov. 
+    # los resultados de una consulta al DataFrame df. 
     # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
     # - anios: [desde_año, hasta_año]
-    # - generos: [generos]
+    # - generos: lista de generos
     # Las estadísticas son:
-    # - Datos película más vieja
-    # - Datos película más nueva
-    # - Bar plots con la cantidad de películas por año/género.
+    # - Película más vieja
+    # - Película más nueva
+    # - Total de películas
+    # - Cantidad de películas por año de estreno
+    # - Cantidad de películas por género
     
-    
-    """
-    print("La pelicula más vieja es ", df_mov['Name'].iloc[df_mov['Release Date'].argmin()])
-    print("La pelicula más nueva es ", df_mov['Name'].iloc[df_mov['Release Date'].argmax()])
-    
-    fig, ax = plt.subplots()
-    df_mov = df_mov.sort_values('Release Date')
-    df_aux=df_mov['Release Date'].dt.year.value_counts(sort=False)
-    df_aux.plot(ax=ax, kind='bar', xlabel='año', ylabel='# peliculas')
-    
-    fig2, ax2 = plt.subplots()
-    df_aux2=df_mov.sum(axis=0, numeric_only=True )[-19:]
-    df_aux2=df_aux2.sort_values()
-    print(df_aux2)
-    df_aux2.plot(ax=ax2, kind='bar', xlabel='genero', ylabel='# peliculas')
-    plt.show()
-    """
-    datos_filtrados = df_mov
-    #filtrar con funcion
+    datos_filtrados = Pelicula.__filter_df__(df, anios=anios, generos=generos)
      
-    stats={
-      
+    stats = {
       "pelicula_mas_vieja": datos_filtrados['Name'].iloc[datos_filtrados['Release Date'].argmin()],
-      "pelicula_mas_nueva": datos_filtrados['Name'].iloc[datos_filtrados['Release Date'].argmax()], 
-      "relase_date_plots": datos_filtrados['Release Date'].dt.year.value_counts(sort=False),
-      "gender_plots": datos_filtrados.sum(axis=0, numeric_only=True )[-19:]
-
+      "pelicula_mas_nueva": datos_filtrados['Name'].iloc[datos_filtrados['Release Date'].argmax()],
+      "total_peliculas": len(datos_filtrados.index),
+      "peliculas_por_anio": datos_filtrados.groupby(datos_filtrados['Release Date'].dt.year).size(),
+      "peliculas_por_genero": datos_filtrados.sum(axis=0, numeric_only=True )[-19:]
     }
     return stats
