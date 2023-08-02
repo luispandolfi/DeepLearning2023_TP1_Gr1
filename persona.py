@@ -118,24 +118,24 @@ class Persona:
     # Este class method imprime una serie de estadísticas calculadas sobre
     # los resultados de una consulta al DataFrame df. 
     # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
-    # fecha de nacimiento
-    # generos
-    # codigo postal
+    # - fecha de nacimiento
+    # - generos
+    # - codigo postal
     # Las estadísticas son:
     # - Persona más vieja
     # - Persona más joven
-    # - Bar plots con la cantidad de películas por año/género.
+    # - Total de personas
+    # - Cantidad de personas por año de nacimiento
+    # - Cantidad de personas por género
     
-    datos_filtrados = df
-    
-    #filtrar con funcion
+    datos_filtrados = Persona.__filter_df__(df, fecha_nacimiento=fecha_nacimiento, genero=genero, codigo_postal=codigo_postal)
 
-    stats={
-      
+    stats = {  
       "persona_mas_vieja": datos_filtrados['Full Name'].iloc[datos_filtrados['year of birth'].argmin()],
-      "persona_mas_joven": datos_filtrados['Full Name'].iloc[datos_filtrados['year of birth'].argmax()], 
-      "year_plots": datos_filtrados['year of birth'].value_counts(sort=False),
-      "gender_plots": datos_filtrados['Gender'].value_counts(sort=False)
+      "persona_mas_joven": datos_filtrados['Full Name'].iloc[datos_filtrados['year of birth'].argmax()],
+      "total_personas": len(datos_filtrados.index),
+      "personas_por_anio": datos_filtrados.groupby('year of birth').size(),
+      "personas_por_genero": datos_filtrados.groupby('Gender').size()
     }
     return stats
 
