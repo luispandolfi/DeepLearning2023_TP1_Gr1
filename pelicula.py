@@ -57,7 +57,8 @@ class Pelicula:
     if id !=  None:
       datos_filtrados = datos_filtrados[(datos_filtrados["id"] == id)]
 
-    if generos!= None and len(generos) == 19:
+    #if generos!= None and len(generos) == 19:
+    if generos!= None:
       aux = 0
       lista_generos = ['unknown','Action','Adventure','Animation',"Children's",'Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance','Sci-Fi','Thriller','War','Western']
       for num in generos:
