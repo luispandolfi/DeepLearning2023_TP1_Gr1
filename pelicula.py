@@ -107,15 +107,20 @@ class Pelicula:
     return DataFrameHelper.append_row(df, new_row, self.id)
 
 
-  def remove_from_df(self, df):
+  def remove_from_df(self, df, df_scores):
     # Borra del DataFrame el objeto contenido en esta clase.
-    # Para realizar el borrado todas las propiedades del objeto deben coincidir
-    # con la entrada en el DF. Caso contrario imprime un error.
+    # Realiza el borrado si:
+    # - Todas las propiedades del objeto coinciden con la entrada en el DF. Caso contrario levanta un excepción.
+    # - No existe un score para la pelicula a borrar. Caso contrario levanta un excepción.
+
     peliculas = self.get_from_df(df, self.id, self.nombre, [self.fecha_estreno, None], self.generos)
-    if (len(peliculas) > 0):
-      return df[df.id != self.id]
-    else:
+    if (len(peliculas) == 0):
       raise Exception('La película no coincide con ninguna de las existentes en el dataframe.')
+    
+    if (self.id in df_scores["movie_id"].values):
+      raise Exception('Existen scores para la película a borrar.')
+    
+    return df[df.id != self.id]
 
 
   @classmethod
