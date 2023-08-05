@@ -97,10 +97,18 @@ class Persona:
     return DataFrameHelper.append_row(df, new_row, self.id)
 
 
-  def remove_from_df(self, df):
+  def remove_from_df(self, df, df_usuarios, df_trabajadores):
     # Borra del DataFrame el objeto contenido en esta clase.
-    # Para realizar el borrado todas las propiedades del objeto deben coincidir
-    # con la entrada en el DF. Caso contrario imprime un error.
+    # Realiza el borrado si:
+    # - Todas las propiedades del objeto coinciden con la entrada en el DF. Caso contrario levanta un excepción.
+    # - No existe un usuario para la persona a borrar. Caso contrario levanta un excepción.
+    # - No existe un trabajador para la persona a borrar. Caso contrario levanta un excepción.
+    
+    if (self.id in df_usuarios["id"].values):
+      raise Exception('Existe un usuario para la persona a borrar.')
+    
+    if (self.id in df_trabajadores["id"].values):
+      raise Exception('Existe un trabajador para la persona a borrar.')
     
     # mediante el get aseguramos que coincidan los valores de las propiedades, salvo nombre_completo que utiliza un contains
     personas = self.get_from_df(df, self.id, self.nombre_completo, [self.fecha_nacimiento, self.fecha_nacimiento], self.genero, self.codigo_postal)
