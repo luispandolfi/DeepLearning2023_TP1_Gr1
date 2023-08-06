@@ -1,5 +1,6 @@
 from dataFrameHelper import DataFrameHelper
 import pandas as pd
+from persona import Persona
 
 class Usuario:
   
@@ -95,22 +96,29 @@ class Usuario:
 
 
   @classmethod
-  def get_stats(cls, df, fecha_alta=None, ocupacion=None):
+  def get_stats(cls, df_usuarios, df_personas, anio_nacimiento=None, ocupacion=None):
     # Este class method imprime una serie de estadísticas calculadas sobre
     # los resultados de una consulta al DataFrame df. 
     # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
-    # - Fecha de alta: [desde, hasta]
+    # - Año de nacimiento: [desde, hasta]
     # - Ocupación
     # Se devuelve:
     # - Total de usuarios
     # - Cantidad de usuarios por año de alta
     # - Cantidad de usuarios por ocupación
 
-    datos_filtrados = Usuario.__filter_df__(df, fecha_alta=fecha_alta, ocupacion=ocupacion)
+    # filtro usuarios por ocupación
+    df_usuarios = Usuario.__filter_df__(df_usuarios, ocupacion=ocupacion)
+
+    # filtro personas por año de nacimiento
+    df_personas = Persona.__filter_df__(df_personas, fecha_nacimiento=anio_nacimiento)
+
+    # join de ambos resultados
+    joined = pd.merge(df_usuarios, df_personas, how='inner', on='id')
 
     stats = {
-      "total_usuarios": len(datos_filtrados.index),
-      "usuarios_por_anio": datos_filtrados.groupby(datos_filtrados['Active Since'].dt.year).size(),
-      "usuarios_por_ocupacion": datos_filtrados.groupby('Occupation').size()
+      "total_usuarios": len(joined.index),
+      "usuarios_por_anio": joined.groupby('year of birth').size(),
+      "usuarios_por_ocupacion": joined.groupby('Occupation').size()
     }
     return stats
