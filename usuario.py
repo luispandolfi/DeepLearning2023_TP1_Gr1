@@ -98,13 +98,13 @@ class Usuario:
   @classmethod
   def get_stats(cls, df_usuarios, df_personas, anio_nacimiento=None, ocupacion=None):
     # Este class method imprime una serie de estadísticas calculadas sobre
-    # los resultados de una consulta al DataFrame df. 
+    # los resultados de una consulta a los data frames.
     # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
     # - Año de nacimiento: [desde, hasta]
     # - Ocupación
     # Se devuelve:
     # - Total de usuarios
-    # - Cantidad de usuarios por año de alta
+    # - Cantidad de usuarios por año de nacimiento
     # - Cantidad de usuarios por ocupación
 
     # filtro usuarios por ocupación

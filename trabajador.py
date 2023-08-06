@@ -1,6 +1,6 @@
 from dataFrameHelper import DataFrameHelper
 import pandas as pd
-
+from persona import Persona
 
 class Trabajador:
   
@@ -110,23 +110,30 @@ class Trabajador:
 
 
   @classmethod
-  def get_stats(cls, df, fecha_alta=None, puesto=None):
+  def get_stats(cls, df_trabajadores, df_personas, anio_nacimiento=None, puesto=None):
     # Este class method imprime una serie de estadísticas calculadas sobre
-    # los resultados de una consulta al DataFrame df. 
+    # los resultados de una consulta a los data frames.
     # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
-    # - Fecha de alta: [desde, hasta]
+    # - Año de nacimiento: [desde, hasta]
     # - Puesto
     # Se devuelve:
     # - Total de trabajadores
-    # - Cantidad de trabajadores por año de alta
+    # - Cantidad de trabajadores por año de nacimiento
     # - Cantidad de trabajadores por puesto
 
-    datos_filtrados = Trabajador.__filter_df__(df, fecha_alta=fecha_alta, puesto=puesto)
+    # filtro trabajadores por puesto
+    df_trabajadores = Trabajador.__filter_df__(df_trabajadores, puesto=puesto)
+
+    # filtro personas por año de nacimiento
+    df_personas = Persona.__filter_df__(df_personas, fecha_nacimiento=anio_nacimiento)
     
+    # join de ambos resultados
+    joined = pd.merge(df_trabajadores, df_personas, how='inner', on='id')
+
     stats = {
-      "total_trabajadores": len(datos_filtrados.index),
-      "trabajadores_por_anio": datos_filtrados.groupby(datos_filtrados['Start Date'].dt.year).size(),
-      "trabajadores_por_puesto": datos_filtrados.groupby('Position').size()
+      "total_trabajadores": len(joined.index),
+      "trabajadores_por_anio": joined.groupby('year of birth').size(),
+      "trabajadores_por_puesto": joined.groupby('Position').size()
     }
 
     return stats
