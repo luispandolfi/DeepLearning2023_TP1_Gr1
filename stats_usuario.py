@@ -6,7 +6,7 @@ class StatsUsuario:
     @classmethod
     def plot_usuarios_por_ocupacion(cls, df_usuarios, df_personas):
         stats_usuarios = Usuario.get_stats(df_usuarios, df_personas)
-        usuarios_por_ocupacion = stats_usuarios["usuarios_por_ocupacion"]
+        usuarios_por_ocupacion = stats_usuarios["usuarios_por_ocupacion"].sort_values(ascending=True)    
         plt.barh(usuarios_por_ocupacion.index, usuarios_por_ocupacion.values)
         plt.xlabel("#Usuarios")
         plt.ylabel("Ocupación")
@@ -23,3 +23,4 @@ class StatsUsuario:
         plt.ylabel("#Usuarios")
         plt.title("Cantidad de usuarios por año de nacimiento")
         plt.show()
+        pass
