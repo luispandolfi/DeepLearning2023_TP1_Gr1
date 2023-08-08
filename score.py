@@ -1,6 +1,7 @@
 from dataFrameHelper import DataFrameHelper
 import pandas as pd
-
+from pelicula import Pelicula
+from usuario import Usuario
 
 class Score:
   
@@ -74,19 +75,49 @@ class Score:
 
 
   @classmethod
-  def get_stats(cls, df):
-    # Este class method imprime una serie de estadísticas calculadas sobre
-    # los resultados de una consulta al DataFrame df. 
-    # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
-    # 
-    # Se devuelve:
-    # Barplot de rating
-    datos_filtrados=df
+  def get_stats_puntuacion_promedio_usuarios_por_anio_pelicula(cls, df_scores, df_peliculas, rango_anio_pelicula=None):
+    # filtro películas por año
+    filtered_peliculas = Pelicula.__filter_df__(df_peliculas, anios=rango_anio_pelicula)
+    
+    # join de scores con películas
+    joined = pd.merge(df_scores, filtered_peliculas, how='inner', left_on='movie_id', right_on='id')
 
-    #filtrar con funcion
-
-    stats={
-      "rating_plots": datos_filtrados['rating'].value_counts(sort=False)
+    stats = {
+      "puntuacion_promedio": joined.groupby(joined['Release Date'].dt.year)['rating'].mean()
     }
     return stats
+  
+  
+  @classmethod
+  def get_stats_puntuacion_promedio_usuarios_por_genero_pelicula(cls, df_scores, df_peliculas, generos_pelicula=None):
+    pass
+
+
+  @classmethod
+  def get_stats_puntuacion_promedio_peliculas_por_ocupacion(cls, df_scores, df_usuarios):
+    # join de scores con usuarios
+    joined = pd.merge(df_scores, df_usuarios, how='inner', left_on='user_id', right_on='id')
+
+    stats = {
+      "puntuacion_promedio": joined.groupby('Occupation')['rating'].mean()
+    }
+    return stats
+  
+
+  @classmethod
+  def get_stats_puntuacion_promedio_peliculas_por_genero_usuario(cls, df_scores, df_usuarios, df_personas):
+    # join de usuarios con personas
+    usuarios_personas = pd.merge(df_usuarios, df_personas, how='inner', left_on='id', right_on='id')
     
+    # join con scores
+    joined = pd.merge(df_scores, usuarios_personas, how='inner', left_on='user_id', right_on='id')
+
+    stats = {
+      "puntuacion_promedio": joined.groupby('Gender')['rating'].mean()
+    }
+    return stats
+  
+
+  @classmethod
+  def get_stats_puntuacion_promedio_peliculas_por_rangos_edad(cls, df_scores, df_usuarios, rangos_edad):
+    pass
