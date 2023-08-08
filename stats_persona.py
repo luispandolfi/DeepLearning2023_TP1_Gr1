@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from persona import Persona
+import pandas as pd
 
 class StatsPersona:
 
@@ -26,5 +27,10 @@ class StatsPersona:
         
 
     @classmethod
-    def plot_personas_por_anio_nacimiento_y_genero(cls):
+    def plot_personas_por_anio_nacimiento_y_genero(cls, df_personas):
+        auxiliar_df = df_personas.groupby(['year of birth','Gender'])['id'].count().reset_index().rename(columns={'id':'Count'})
+        pivot = pd.pivot_table(data=auxiliar_df, index=['year of birth'], columns=['Gender'], values=['Count'])
+        ax = pivot.plot.bar(stacked=True, color =['lightseagreen', 'tomato'], figsize=(8,6))
+        ax.set_title('Personas por año separadas por genero', fontsize=20)
+        plt.show()
         pass
