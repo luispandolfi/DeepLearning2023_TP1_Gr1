@@ -28,7 +28,7 @@ class DataFrameStore:
     self.peliculas = peliculas
     self.scores = scores
 
-def save_dfs(df_personas, df_trabajadores, df_usuarios, df_peliculas, df_scores, file_personas="csv_files/personas.csv", file_trabajadores="csv_files/trabajadores.csv", file_usuarios="csv_files/usuarios.csv", file_peliculas="csv_files/peliculas.csv", file_scores="csv_files/scores.csv"):
+def save_dfs(df_personas, df_trabajadores, df_usuarios, df_peliculas, df_scores, file_personas="csv_files_out/personas.csv", file_trabajadores="csv_files_out/trabajadores.csv", file_usuarios="csv_files_out/usuarios.csv", file_peliculas="csv_files_out/peliculas.csv", file_scores="csv_files_out/scores.csv"):
     #
     # Guarda los dataframes en archivos CSVs
     #
