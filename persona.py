@@ -4,9 +4,9 @@ import pandas as pd
 
 class Persona:
   
-  def __init__(self, nombre_completo, fecha_nacimiento, genero, codigo_postal, id = None):
+  def __init__(self, nombre_completo, anio_nacimiento, genero, codigo_postal, id = None):
     self.nombre_completo = nombre_completo
-    self.fecha_nacimiento = fecha_nacimiento
+    self.anio_nacimiento = anio_nacimiento
     self.genero = genero
     self.codigo_postal = codigo_postal
     self.id = id
@@ -14,7 +14,7 @@ class Persona:
 
   def __repr__(self):
     # Este método imprime la información de esta persona.
-    return f'Nombre: {self.nombre_completo}, Fecha de nacimiento: {self.fecha_nacimiento}, Genero: {self.genero}, Codigo Postal: {self.codigo_postal}, ID: {self.id}\n'
+    return f'Nombre: {self.nombre_completo}, Fecha de nacimiento: {self.anio_nacimiento}, Genero: {self.genero}, Codigo Postal: {self.codigo_postal}, ID: {self.id}\n'
     #pass
 
 
@@ -37,14 +37,14 @@ class Persona:
 
 
   @classmethod
-  def __filter_df__(cls, df, id=None, nombre_completo=None, fecha_nacimiento=None, genero=None, codigo_postal=None):
+  def __filter_df__(cls, df, id=None, nombre_completo=None, anio_nacimiento=None, genero=None, codigo_postal=None):
     datos_filtrados = df
     
-    if fecha_nacimiento != None:
-      if len(fecha_nacimiento) == 2:
-        datos_filtrados = datos_filtrados[(datos_filtrados["year of birth"] >= fecha_nacimiento[0]) & (datos_filtrados["year of birth"] <= fecha_nacimiento[1])]
+    if anio_nacimiento != None:
+      if len(anio_nacimiento) == 2:
+        datos_filtrados = datos_filtrados[(datos_filtrados["year of birth"] >= anio_nacimiento[0]) & (datos_filtrados["year of birth"] <= anio_nacimiento[1])]
       else:
-        raise ValueError("El parámetro fecha_nacimiento debe ser una lista de largo 2")
+        raise ValueError("El parámetro anio_nacimiento debe ser una lista de largo 2")
     
     if nombre_completo != None:
       datos_filtrados = datos_filtrados[datos_filtrados['Full Name'].str.contains(nombre_completo,case=False)]
@@ -62,15 +62,15 @@ class Persona:
 
 
   @classmethod    
-  def get_from_df(cls, df, id=None, nombre_completo=None, fecha_nacimiento=None, genero=None, codigo_postal=None):
+  def get_from_df(cls, df, id=None, nombre_completo=None, anio_nacimiento=None, genero=None, codigo_postal=None):
     # Este class method devuelve una lista de objetos 'Persona' buscando por:
     # - id: id
     # - nombre_completo: nombre completo
-    # - fecha_nacimiento: [desde_año, hasta_año]
+    # - anio_nacimiento: [desde_año, hasta_año]
     # - genero: genero (M o F)
     # - codigo_postal: codigo postal
     
-    datos_filtrados = Persona.__filter_df__(df, id, nombre_completo, fecha_nacimiento, genero, codigo_postal)
+    datos_filtrados = Persona.__filter_df__(df, id, nombre_completo, anio_nacimiento, genero, codigo_postal)
 
     lista_respuesta = []
     for indice, fila in datos_filtrados.iterrows():
@@ -79,7 +79,7 @@ class Persona:
       fecha_nac = fila['year of birth']
       perso_genero = fila['Gender']
       cod_postal = fila['Zip Code']
-      personax = Persona(codigo, nombre, fecha_nac, perso_genero, cod_postal)
+      personax = Persona(nombre_completo=nombre, anio_nacimiento=fecha_nac, genero=perso_genero, codigo_postal=cod_postal, id=codigo)
       lista_respuesta.append(personax)
     return lista_respuesta
 
@@ -90,7 +90,7 @@ class Persona:
     # id ya existe, no la agrega y devuelve un error.
     new_row = {
       "Full Name": self.nombre_completo,
-      "year of birth": self.fecha_nacimiento,
+      "year of birth": self.anio_nacimiento,
       "Gender": self.genero,
       "Zip Code": self.codigo_postal,
     }
@@ -111,7 +111,7 @@ class Persona:
       raise Exception('Existe un trabajador para la persona a borrar.')
     
     # mediante el get aseguramos que coincidan los valores de las propiedades, salvo nombre_completo que utiliza un contains
-    personas = self.get_from_df(df, self.id, self.nombre_completo, [self.fecha_nacimiento, self.fecha_nacimiento], self.genero, self.codigo_postal)
+    personas = self.get_from_df(df, self.id, self.nombre_completo, [self.anio_nacimiento, self.anio_nacimiento], self.genero, self.codigo_postal)
     for persona in personas:
       if persona.nombre_completo == self.nombre_completo:
         return df[df.id != self.id]
@@ -121,7 +121,7 @@ class Persona:
 
 
   @classmethod
-  def get_stats(cls, df, fecha_nacimiento=None, genero=None, codigo_postal=None):
+  def get_stats(cls, df, anio_nacimiento=None, genero=None, codigo_postal=None):
     # Este class method imprime una serie de estadísticas calculadas sobre
     # los resultados de una consulta al DataFrame df. 
     # Las estadísticas se realizarán sobre las filas que cumplan con los requisitos de:
@@ -135,7 +135,7 @@ class Persona:
     # - Cantidad de personas por año de nacimiento
     # - Cantidad de personas por género
     
-    datos_filtrados = Persona.__filter_df__(df, fecha_nacimiento=fecha_nacimiento, genero=genero, codigo_postal=codigo_postal)
+    datos_filtrados = Persona.__filter_df__(df, anio_nacimiento=anio_nacimiento, genero=genero, codigo_postal=codigo_postal)
 
     stats = {  
       "persona_mas_vieja": datos_filtrados['Full Name'].iloc[datos_filtrados['year of birth'].argmin()],

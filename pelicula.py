@@ -6,7 +6,7 @@ class Pelicula:
 
   def __init__(self, nombre, fecha_estreno, generos, id = None):
     self.nombre = nombre
-    self.fecha_estreno = fecha_estreno
+    self.fecha_estreno = pd.to_datetime(fecha_estreno, format="%Y-%m-%d")
     self.generos = generos
     self.id = id
 

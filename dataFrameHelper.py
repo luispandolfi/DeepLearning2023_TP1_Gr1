@@ -13,3 +13,4 @@ class DataFrameHelper:
         
         new_row_df = pd.DataFrame(new_row, index=[0])
         return pd.concat([df, new_row_df], ignore_index=True)
+

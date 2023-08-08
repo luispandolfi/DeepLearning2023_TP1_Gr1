@@ -6,7 +6,7 @@ class Usuario:
   
   def __init__(self, id, fecha_alta, ocupacion):
     self.id = id
-    self.fecha_alta = fecha_alta
+    self.fecha_alta = pd.to_datetime(fecha_alta, format="%Y-%m-%d")          
     self.ocupacion = ocupacion
 
 
@@ -48,7 +48,7 @@ class Usuario:
         raise ValueError("La lista fecha_alta debe tener largo 2")
     
     if ocupacion != None:
-      datos_filtrados = datos_filtrados[datos_filtrados["Occupation"] == ocupacion]
+      datos_filtrados = datos_filtrados[datos_filtrados["Occupation"].str.contains(ocupacion, case=False)]
     
     return datos_filtrados
 

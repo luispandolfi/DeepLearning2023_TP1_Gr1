@@ -6,7 +6,7 @@ class Trabajador:
   
   def __init__(self, id, fecha_alta, puesto, categoria, horario_trabajo):
     self.id = id
-    self.fecha_alta = fecha_alta
+    self.fecha_alta = pd.to_datetime(fecha_alta, format="%Y-%m-%d")
     self.puesto = puesto
     self.categoria = categoria
     self.horario_trabajo = horario_trabajo
@@ -50,10 +50,10 @@ class Trabajador:
         raise ValueError("La lista fecha_alta debe tener largo 2")
     
     if puesto != None:
-      datos_filtrados = datos_filtrados[(datos_filtrados["Position"] == puesto)]
+      datos_filtrados = datos_filtrados[datos_filtrados["Position"].str.contains(puesto, case=False)]      #datos_filtrados[datos_filtrados['Name'].str.contains(nombre,case=False)]
     
     if categoria != None:
-      datos_filtrados = datos_filtrados[(datos_filtrados["Category"] == categoria)]
+      datos_filtrados = datos_filtrados[datos_filtrados["Category"].str.contains(categoria, case=False)]
 
     if horario_trabajo != None:
       datos_filtrados = datos_filtrados[(datos_filtrados["Working Hours"] == horario_trabajo)]
