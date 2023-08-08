@@ -85,7 +85,7 @@ class Trabajador:
     return lista_respuesta
 
 
-  def write_df(self, df): 
+  def write_df(self, df, df_personas): 
     # Este método recibe el dataframe de trabajadores y agrega al trabajador
     # Si el id es None, toma el id más alto del DF y le suma uno. Si el 
     # id ya existe, no lo agrega y devuelve un error.
@@ -95,7 +95,13 @@ class Trabajador:
       "Working Hours": self.horario_trabajo,
       "Start Date": self.fecha_alta,
     }
-    return DataFrameHelper.append_row(df, new_row, self.id)
+
+    df_is_persona_exist = df_personas[df_personas['id']== self.id]
+    if (df_is_persona_exist.empty):
+      raise Exception('Error al guardar un trabajador no dado de alta como persona.')
+    else:
+      return DataFrameHelper.append_row(df, new_row, self.id)
+
 
 
   def remove_from_df(self, df):
