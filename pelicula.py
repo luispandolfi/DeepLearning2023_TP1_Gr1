@@ -57,14 +57,14 @@ class Pelicula:
     if id !=  None:
       datos_filtrados = datos_filtrados[(datos_filtrados["id"] == id)]
 
-    #if generos!= None and len(generos) == 19:
     if generos!= None:
-      aux = 0
-      lista_generos = ['unknown','Action','Adventure','Animation',"Children's",'Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance','Sci-Fi','Thriller','War','Western']
-      for num in generos:
-        datos_filtrados = datos_filtrados.query(f'{lista_generos[aux]} == {num}')
-        aux += 1
-    
+      for i in range(len(generos)):
+        aux = 0
+        lista_generos = ['unknown','Action','Adventure','Animation',"Children's",'Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance','Sci-Fi','Thriller','War','Western']
+        for num in lista_generos:
+          if generos[i].lower() == lista_generos[aux].lower():
+            datos_filtrados = datos_filtrados[(datos_filtrados[lista_generos[aux]] == 1)]
+          aux += 1
     return datos_filtrados
 
 
