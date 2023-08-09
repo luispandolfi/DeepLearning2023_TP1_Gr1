@@ -115,7 +115,7 @@ class Usuario:
     df_usuarios = Usuario.__filter_df__(df_usuarios, ocupacion=ocupacion)
 
     # filtro personas por año de nacimiento
-    df_personas = Persona.__filter_df__(df_personas, fecha_nacimiento=anio_nacimiento)
+    df_personas = Persona.__filter_df__(df_personas, anio_nacimiento=anio_nacimiento)
 
     # join de ambos resultados
     joined = pd.merge(df_usuarios, df_personas, how='inner', on='id')
