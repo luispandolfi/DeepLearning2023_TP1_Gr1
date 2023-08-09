@@ -2,6 +2,7 @@ from dataFrameHelper import DataFrameHelper
 import pandas as pd
 from pelicula import Pelicula
 from usuario import Usuario
+import datetime
 
 class Score:
   
@@ -163,5 +164,29 @@ class Score:
   
 
   @classmethod
-  def get_stats_puntuacion_promedio_peliculas_por_rangos_edad(cls, df_scores, df_usuarios, rangos_edad):
-    pass
+  def get_stats_puntuacion_promedio_peliculas_por_grupo_etareo(cls, df_scores, df_usuarios, df_personas):
+    # join de usuarios con personas
+    usuarios_personas = pd.merge(df_usuarios, df_personas, how='inner', left_on='id', right_on='id')
+    # para cada usuario calculo su grupo etáreo
+    usuarios_personas["grupo etareo"] = usuarios_personas.apply(Score.grupo_etareo, axis=1)
+    # join con scores
+    joined = pd.merge(df_scores, usuarios_personas, how='inner', left_on='user_id', right_on='id')
+
+    stats = {
+      "puntuacion_promedio": joined.groupby('grupo etareo')['rating'].mean()
+    }
+    return stats
+  
+
+  @classmethod
+  def grupo_etareo(cls, df_personas_row):
+    anio_nacimiento = df_personas_row["year of birth"]
+    edad = datetime.date.today().year - anio_nacimiento
+    rangos = [[0,6], [7,12], [13,24], [25,36], [37,48], [49,60], [60, 999]]
+    for rango in rangos:
+      if (rango[0] <= edad & edad <= rango[1]):
+        if (rango[1] == 999):
+          return f'> {rango[0]}'
+        else:
+          return f'{rango[0]} - {rango[1]}'
+    return "no definido"

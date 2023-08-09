@@ -42,5 +42,11 @@ class StatsScore:
 
 
     @classmethod
-    def plot_puntuacion_promedio_peliculas_por_rangos_edad(cls, df_scores, df_usuarios, rangos_edad):
-        pass
+    def plot_puntuacion_promedio_peliculas_por_grupo_etareo(cls, df_scores, df_usuarios, df_personas):
+        stats = Score.get_stats_puntuacion_promedio_peliculas_por_grupo_etareo(df_scores, df_usuarios, df_personas)
+        puntuacion_promedio = stats["puntuacion_promedio"]
+        plt.bar(puntuacion_promedio.index, puntuacion_promedio.values)
+        plt.xlabel("Grupo etáreo")
+        plt.ylabel("Puntuación promedio")
+        plt.title("Puntuación promedio de películas por grupo etáreo")
+        plt.show()
