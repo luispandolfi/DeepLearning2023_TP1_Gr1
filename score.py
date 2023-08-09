@@ -9,7 +9,7 @@ class Score:
     self.id_usuario = id_usuario
     self.id_pelicula = id_pelicula
     self.puntuacion = puntuacion
-    self.fecha = fecha
+    self.fecha = pd.to_datetime(fecha, format="%Y-%m-%d")
     self.id = id
 
 
@@ -44,23 +44,67 @@ class Score:
     return df
 
 
+  @classmethod
+  def __filter_df__(cls, df, id=None, id_usuario=None, id_pelicula=None, puntuacion=None, fecha_score=None):
+    datos_filtrados = df
+    
+    if fecha_score != None:
+      if len(fecha_score) == 2:
+        datos_filtrados = datos_filtrados[(datos_filtrados["Date"] >= fecha_score[0]) & (datos_filtrados["Date"] <= fecha_score[1])]
+      else:
+        raise ValueError("El parámetro fecha_score debe ser una lista de largo 2")
+    
+    if  id !=  None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["id"] == id)]
+
+    if id_usuario !=  None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["user_id"] == id_usuario)]
+
+    if id_pelicula !=  None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["movie_id"] == id_pelicula)]
+
+    if puntuacion !=  None:
+      datos_filtrados = datos_filtrados[(datos_filtrados["rating"] == puntuacion)]
+    
+    return datos_filtrados
+
+
   @classmethod    
   def get_from_df(cls, df, id=None, id_usuario=None, id_pelicula=None, puntuacion=None, fecha=None):
     # Este class method devuelve una lista de objetos 'Score' buscando por:
-    # 
-    # TODO completar comentario y agregar parametros al metodo
-    pass
+
+    datos_filtrados = Score.__filter_df__(df, id, id_usuario, id_pelicula, puntuacion, fecha)
+
+    lista_respuesta = []
+    for indice, fila in datos_filtrados.iterrows():
+      codigo = fila['id']
+      userid = fila['user_id']
+      movieid = fila['movie_id']
+      puntaje = fila['rating']
+      fecha_calificacion = fila['Date']
+      scorex = Score(id=codigo, id_usuario=userid, id_pelicula=movieid,puntuacion=puntaje,fecha=fecha_calificacion)
+      lista_respuesta.append(scorex)
+    return lista_respuesta
 
 
-  def write_df(self, df): 
+  def write_df(self, df, df_usuarios, df_peliculas): 
     # Este método recibe el dataframe de scores y agrega el puntaje.
     # Si el id es None, toma el id más alto del DF y le suma uno. Si el 
     # id ya existe, no lo agrega y devuelve un error.
     new_row = {
-      "Occupation": self.ocupacion,
-      "Active Since": self.fecha_alta,
+      "user_id": self.id_usuario,
+      "movie_id": self.id_pelicula,
+      "rating": self.puntuacion,
+      "Date": self.fecha,
     }
-    return DataFrameHelper.append_row(df, new_row, self.id)
+
+    df_is_usuario_exist = df_usuarios[df_usuarios['id']== self.id]
+    df_is_movie_exist = df_peliculas[df_peliculas['id']== self.id]
+
+    if df_is_usuario_exist.empty or df_is_movie_exist.empty:
+      raise Exception('Error al guardar calificacion, no existe usuario o pelicula.')
+    else:
+      return DataFrameHelper.append_row(df, new_row, self.id)
 
 
   def remove_from_df(self, df):
