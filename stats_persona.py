@@ -8,7 +8,7 @@ class StatsPersona:
     def plot_personas_por_anio_nacimiento(cls, df_personas):
         stats_personas = Persona.get_stats(df_personas)
         personas_por_anio = stats_personas["personas_por_anio"]
-        plt.bar(personas_por_anio.index, personas_por_anio.values)
+        plt.bar(personas_por_anio.index, personas_por_anio.values, color="lightseagreen")
         plt.xlabel("Año de nacimiento")
         plt.ylabel("#Personas")
         plt.title("Cantidad de personas por año de nacimiento")
@@ -19,7 +19,7 @@ class StatsPersona:
     def plot_personas_por_genero(cls, df_personas):
         stats_personas = Persona.get_stats(df_personas)
         personas_por_genero = stats_personas["personas_por_genero"]
-        plt.bar(personas_por_genero.index, personas_por_genero.values)
+        plt.bar(personas_por_genero.index, personas_por_genero.values, color="lightseagreen")
         plt.xlabel("Género")
         plt.ylabel("#Personas")
         plt.title("Cantidad de personas por género")
