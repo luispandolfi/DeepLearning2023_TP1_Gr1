@@ -21,5 +21,6 @@ class StatsTrabajador:
         plt.bar(trabajadores_por_anio.index, trabajadores_por_anio.values, color="lightseagreen")
         plt.xlabel("Año de nacimiento")
         plt.ylabel("#Trabajadores")
+        plt.yticks([0,1,2,3])
         plt.title("Cantidad de trabajadores por año de nacimiento")
         plt.show()
