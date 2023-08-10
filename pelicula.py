@@ -16,7 +16,7 @@ class Pelicula:
   def __repr__(self):
     # Este método debe imprimir la información de esta película.
 
-    return f'Nombre: {self.nombre}, Fecha de estreno: {self.fecha_estreno}, Genero: {self.generos}, ID: {self.id}\n'
+    return f'Nombre: {self.nombre}, Fecha de estreno: {self.fecha_estreno}, Genero: {self.generos}, ID: {self.id}'
     # strings = list()
     # strings.append(f'Nombre: {self.nombre}')
     # strings.append(f'Fecha de estreno: {self.fecha_estreno}')
@@ -108,20 +108,35 @@ class Pelicula:
     return DataFrameHelper.append_row(df, new_row, self.id)
 
 
-  def remove_from_df(self, df, df_scores):
+  @classmethod    
+  def remmove_from_df(cls, df, df_scores, id=None):
+    peliculas = Pelicula.get_from_df(df, id=id)
+    if (len(peliculas) == 0):
+      raise Exception('La película no coincide con ninguna de las existentes en el dataframe.')
+    
+    if (id in df_scores["movie_id"].values):
+      raise Exception('Existen scores para la película a borrar.')
+    
+    return df[df['id'] != id]
+
+
+
+#  def remove_from_df(self, df, df_scores):
     # Borra del DataFrame el objeto contenido en esta clase.
     # Realiza el borrado si:
     # - Todas las propiedades del objeto coinciden con la entrada en el DF. Caso contrario levanta un excepción.
     # - No existe un score para la pelicula a borrar. Caso contrario levanta un excepción.
 
-    peliculas = self.get_from_df(df, self.id, self.nombre, [self.fecha_estreno, None], self.generos)
-    if (len(peliculas) == 0):
-      raise Exception('La película no coincide con ninguna de las existentes en el dataframe.')
+    #peliculas = self.get_from_df(df, self.id, self.nombre, [self.fecha_estreno, None], self.generos)
+#    peliculas = self.get_from_df(df, id=self.id)
+#    if (len(peliculas) == 0):
+#      raise Exception('La película no coincide con ninguna de las existentes en el dataframe.')
     
-    if (self.id in df_scores["movie_id"].values):
-      raise Exception('Existen scores para la película a borrar.')
+#    if (self.id in df_scores["movie_id"].values):
+#      raise Exception('Existen scores para la película a borrar.')
     
-    return df[df.id != self.id]
+#    return df[df['id'] != self.id]
+  
 
 
   @classmethod
