@@ -15,7 +15,11 @@ class Pelicula:
 
   def __repr__(self):
     # Este método debe imprimir la información de esta película.
-
+    GENEROS = ['unknown','Action','Adventure','Animation',"Children's",'Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance','Sci-Fi','Thriller','War','Western']
+    lista_generos=[]
+    for idx in range(len(self.generos)):
+      if self.generos[idx]:
+        lista_generos.append(GENEROS[idx])
     return f'Nombre: {self.nombre}, Fecha de estreno: {self.fecha_estreno}, Genero: {self.generos}, ID: {self.id}\n'
     # strings = list()
     # strings.append(f'Nombre: {self.nombre}')
@@ -84,9 +88,14 @@ class Pelicula:
       codigo = fila['id']
       nombre = fila['Name']
       fecha = fila['Release Date']
-      list_genero = [fila['unknown'],fila['Action'],fila['Adventure'],fila['Animation'],fila["Children's"],fila['Comedy'],fila['Crime'],fila['Documentary'],fila['Drama'],fila['Fantasy'],fila['Film-Noir'],fila['Horror'],fila['Musical'],fila['Mystery'],fila['Romance'],fila['Sci-Fi'],fila['Thriller'],fila['War'],fila['Western']]
+      GENEROS = ['unknown','Action','Adventure','Animation',"Children's",'Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance','Sci-Fi','Thriller','War','Western']
+      lista_generos=[]
+      for key in GENEROS:
+        if fila[key]:
+          lista_generos.append(key)
       
-      peliculax = Pelicula(nombre,fecha,list_genero,codigo)
+      
+      peliculax = Pelicula(nombre,fecha,lista_generos,codigo)
       lista_respuesta.append(peliculax)
     return lista_respuesta
 
