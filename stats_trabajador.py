@@ -6,7 +6,7 @@ class StatsTrabajador:
     @classmethod
     def plot_trabajadores_por_puesto(cls, df_trabajadores, df_personas):
         stats_trabajadores = Trabajador.get_stats(df_trabajadores, df_personas)
-        trabajadores_por_puesto = stats_trabajadores["trabajadores_por_puesto"]
+        trabajadores_por_puesto = stats_trabajadores["trabajadores_por_puesto"].sort_values(ascending=True)   
         plt.barh(trabajadores_por_puesto.index, trabajadores_por_puesto.values)
         plt.xlabel("#Trabajadores")
         plt.ylabel("Puesto")

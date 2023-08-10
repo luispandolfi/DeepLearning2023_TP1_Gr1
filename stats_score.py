@@ -29,7 +29,7 @@ class StatsScore:
     @classmethod
     def plot_puntuacion_promedio_peliculas_por_ocupacion(cls, df_scores, df_usuarios):
         stats = Score.get_stats_puntuacion_promedio_peliculas_por_ocupacion(df_scores, df_usuarios)
-        puntuacion_promedio = stats["puntuacion_promedio"]
+        puntuacion_promedio = stats["puntuacion_promedio"].sort_values(ascending=True)   
         plt.barh(puntuacion_promedio.index, puntuacion_promedio.values)
         plt.xlabel("Puntuación promedio")
         plt.ylabel("Ocupación")

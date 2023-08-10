@@ -15,6 +15,6 @@ class StatsPelicula:
     @classmethod
     def plot_peliculas_por_genero(cls, df_peliculas):
         stats_peliculas = Pelicula.get_stats(df_peliculas)
-        peliculas_por_genero = stats_peliculas["peliculas_por_genero"]
+        peliculas_por_genero = stats_peliculas["peliculas_por_genero"].sort_values(ascending=True)   
         plt.barh(peliculas_por_genero.index, peliculas_por_genero.values)
         plt.show()
