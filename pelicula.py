@@ -62,10 +62,9 @@ class Pelicula:
     if generos!= None:
       for i in range(len(generos)):
         aux = 0
-        lista_generos = ['unknown','Action','Adventure','Animation',"Children's",'Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance','Sci-Fi','Thriller','War','Western']
-        for num in lista_generos:
-          if generos[i].lower() == lista_generos[aux].lower():
-            datos_filtrados = datos_filtrados[(datos_filtrados[lista_generos[aux]] == 1)]
+        for num in Pelicula.GENEROS:
+          if generos[i].lower() == Pelicula.GENEROS[aux].lower():
+            datos_filtrados = datos_filtrados[(datos_filtrados[Pelicula.GENEROS[aux]] == 1)]
           aux += 1
     return datos_filtrados
 
