@@ -29,8 +29,10 @@ class StatsPersona:
     @classmethod
     def plot_personas_por_anio_nacimiento_y_genero(cls, df_personas):
         auxiliar_df = df_personas.groupby(['year of birth','Gender'])['id'].count().reset_index().rename(columns={'id':'Count'})
-        pivot = pd.pivot_table(data=auxiliar_df, index=['year of birth'], columns=['Gender'], values=['Count'])
+        pivot = pd.pivot_table(data=auxiliar_df, index=['year of birth'], columns=['Gender'], values=['Count'], fill_value=0)
         ax = pivot.plot.bar(stacked=True, color =['lightseagreen', 'tomato'], figsize=(8,6))
+        handles, labels = ax.get_legend_handles_labels()
+        ax.legend(handles[::], ['F', 'M'], title='Género',bbox_to_anchor=(1, 0.5))
         ax.set_title('Personas por año separadas por genero', fontsize=20)
         plt.show()
         pass
