@@ -134,8 +134,20 @@ class Score:
   
   
   @classmethod
-  def get_stats_puntuacion_promedio_usuarios_por_genero_pelicula(cls, df_scores, df_peliculas, generos_pelicula=None):
-    pass
+  def get_stats_puntuacion_promedio_usuarios_por_genero_pelicula(cls, df_scores, df_peliculas, generos):
+    # join de scores con películas
+    joined = pd.merge(df_scores, df_peliculas, how='inner', left_on='movie_id', right_on='id')
+    
+    # calculo el promedio para cada género
+    promedios = []
+    for genero in generos:
+      promedios.append(joined[joined[genero] == 1]['rating'].mean())
+    
+    serie = pd.Series(promedios, generos)
+    stats = {
+      "puntuacion_promedio": serie
+    }
+    return stats
 
 
   @classmethod
@@ -168,7 +180,7 @@ class Score:
     # join de usuarios con personas
     usuarios_personas = pd.merge(df_usuarios, df_personas, how='inner', left_on='id', right_on='id')
     # para cada usuario calculo su grupo etáreo
-    usuarios_personas["grupo etareo"] = usuarios_personas.apply(Score.grupo_etareo, axis=1)
+    usuarios_personas["grupo etareo"] = usuarios_personas.apply(Score.__grupo_etareo__, axis=1)
     # join con scores
     joined = pd.merge(df_scores, usuarios_personas, how='inner', left_on='user_id', right_on='id')
 
@@ -179,7 +191,7 @@ class Score:
   
 
   @classmethod
-  def grupo_etareo(cls, df_personas_row):
+  def __grupo_etareo__(cls, df_personas_row):
     anio_nacimiento = df_personas_row["year of birth"]
     edad = datetime.date.today().year - anio_nacimiento
     rangos = [[0,6], [7,12], [13,24], [25,36], [37,48], [49,60], [60, 999]]

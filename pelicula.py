@@ -4,6 +4,8 @@ import pandas as pd
 
 class Pelicula:
 
+  GENEROS = ['unknown','Action','Adventure','Animation',"Children's",'Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance','Sci-Fi','Thriller','War','Western']
+
   def __init__(self, nombre, fecha_estreno, generos, id = None):
     self.nombre = nombre
     self.fecha_estreno = pd.to_datetime(fecha_estreno, format="%Y-%m-%d")

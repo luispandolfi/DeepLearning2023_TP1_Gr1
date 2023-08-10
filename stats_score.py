@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from score import Score
+from pelicula import Pelicula
 
 class StatsScore:
 
@@ -15,8 +16,14 @@ class StatsScore:
 
 
     @classmethod
-    def plot_puntuacion_promedio_usuarios_por_genero_pelicula(cls, df_scores, df_peliculas, generos_pelicula=None):
-        pass
+    def plot_puntuacion_promedio_usuarios_por_genero_pelicula(cls, df_scores, df_peliculas):
+        stats = Score.get_stats_puntuacion_promedio_usuarios_por_genero_pelicula(df_scores, df_peliculas, Pelicula.GENEROS)
+        puntuacion_promedio = stats["puntuacion_promedio"].sort_values(ascending=True)
+        plt.barh(puntuacion_promedio.index, puntuacion_promedio.values)
+        plt.xlabel("Puntuación promedio")
+        plt.ylabel("Género")
+        plt.title("Puntuación promedio de usuarios por género de películas")
+        plt.show()
     
 
     @classmethod
