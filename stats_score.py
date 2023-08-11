@@ -8,6 +8,7 @@ class StatsScore:
     def plot_puntuacion_promedio_usuarios_por_anio_pelicula(cls, df_scores, df_peliculas, rango_anio_pelicula=None):
         stats = Score.get_stats_puntuacion_promedio_usuarios_por_anio_pelicula(df_scores, df_peliculas, rango_anio_pelicula=rango_anio_pelicula)
         puntuacion_promedio = stats["puntuacion_promedio"]
+        plt.figure(figsize=(10,5))
         plt.bar(puntuacion_promedio.index, puntuacion_promedio.values, color="lightseagreen")
         plt.xlabel("Año de estreno")
         plt.ylabel("Puntuación promedio")

@@ -18,6 +18,7 @@ class StatsTrabajador:
     def plot_trabajadores_por_anio_nacimiento(cls, df_trabajadores, df_personas):
         stats_trabajadores = Trabajador.get_stats(df_trabajadores, df_personas)
         trabajadores_por_anio = stats_trabajadores["trabajadores_por_anio"]
+        plt.figure(figsize=(10,5))
         plt.bar(trabajadores_por_anio.index, trabajadores_por_anio.values, color="lightseagreen")
         plt.xlabel("Año de nacimiento")
         plt.ylabel("#Trabajadores")
