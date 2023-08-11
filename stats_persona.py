@@ -49,4 +49,6 @@ class StatsPersona:
         ax.legend(handles[::], ['F', 'M'], title='Género',loc='upper left')
 
         ax.set_title("Cantidad de personas por género y año")
+        plt.xlabel("Año de nacimiento")
+        plt.ylabel("#Personas")
         plt.show()
