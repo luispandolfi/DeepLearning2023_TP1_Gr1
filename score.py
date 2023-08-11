@@ -99,8 +99,8 @@ class Score:
       "Date": self.fecha,
     }
 
-    df_is_usuario_exist = df_usuarios[df_usuarios['id']== self.id]
-    df_is_movie_exist = df_peliculas[df_peliculas['id']== self.id]
+    df_is_usuario_exist = df_usuarios[df_usuarios['id']== self.id_usuario]
+    df_is_movie_exist = df_peliculas[df_peliculas['id']== self.id_pelicula]
 
     if df_is_usuario_exist.empty or df_is_movie_exist.empty:
       raise Exception('Error al guardar calificacion, no existe usuario o pelicula.')
@@ -114,7 +114,7 @@ class Score:
     # con la entrada en el DF. Caso contrario imprime un error.
     scores = self.get_from_df(df, self.id, self.id_usuario, self.id_pelicula, self.puntuacion, [self.fecha, self.fecha])
     if (len(scores) == 1):
-      return df[df.id != self.id]
+      return df[df.id != scores[0].id]
     else:
       raise Exception('El score no coincide con ninguno de los existentes en el dataframe.')
 
