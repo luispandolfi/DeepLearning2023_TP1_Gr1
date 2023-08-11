@@ -34,7 +34,10 @@ class Pelicula:
 
   @classmethod
   def clean_df(cls, df):
-    df = df.dropna()
+    df = df.dropna(subset=['id', 'Name', 'Release Date', 'unknown', 'Action',
+       'Adventure', 'Animation', "Children's", 'Comedy', 'Crime',
+       'Documentary', 'Drama', 'Fantasy', 'Film-Noir', 'Horror', 'Musical',
+       'Mystery', 'Romance', 'Sci-Fi', 'Thriller', 'War', 'Western'])
     df["Release Date"] = pd.to_datetime(df["Release Date"], format="%d-%b-%Y")
     return df
 
